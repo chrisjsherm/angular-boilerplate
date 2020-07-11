@@ -2,6 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { makeServer } from '../mock-servers/heroes/heroes.server';
+
 export const environment = {
   production: false,
 };
@@ -14,3 +16,8 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+/**
+ * Intercept HTTP requests with MirageJS
+ */
+makeServer({ environment: 'development' });
