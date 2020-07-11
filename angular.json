@@ -104,5 +104,8 @@
       }
     }
   },
-  "defaultProject": "angular-boilerplate"
+  "defaultProject": "angular-boilerplate",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
