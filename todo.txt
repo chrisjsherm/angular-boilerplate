@@ -1,3 +1,1 @@
-* Run `npm install` to fix Angular Devkit package that `npm audit` upgraded to version 10
-* MirageJS mock server
 * Implement Heroes HTTP service
