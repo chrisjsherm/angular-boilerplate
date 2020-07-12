@@ -1,1 +1,1 @@
-* Implement Heroes HTTP service
+* Mock list page subscription

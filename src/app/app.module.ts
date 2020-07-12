@@ -10,12 +10,13 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { reducers } from './redux/reducers/app.action-reducer-map';
+import { ListPageComponent } from './pages/list-page/list-page.component';
 
 /**
  * Base module for the entire application
  */
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ListPageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
