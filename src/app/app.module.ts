@@ -11,6 +11,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { reducers } from './redux/reducers/app.action-reducer-map';
 import { ListPageComponent } from './pages/list-page/list-page.component';
+import { EffectsModule } from '@ngrx/effects';
+import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
 
 /**
  * Base module for the entire application
@@ -25,6 +27,7 @@ import { ListPageComponent } from './pages/list-page/list-page.component';
     AngularMaterialModule,
     LayoutModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([FetchListPageDataEffects]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],

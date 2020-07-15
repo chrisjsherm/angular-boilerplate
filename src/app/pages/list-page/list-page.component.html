@@ -1,1 +1,9 @@
-<p>list-page works!</p>
+<h1>
+  Heroes
+</h1>
+
+<ul *ngFor="let hero of heroes$ | async">
+  <li>
+    {{ hero | json }}
+  </li>
+</ul>

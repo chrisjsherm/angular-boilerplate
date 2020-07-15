@@ -33,7 +33,10 @@ export function makeServer(
     },
 
     serializers: {
-      application: RestSerializer,
+      application: RestSerializer.extend({
+        embed: true,
+        root: false,
+      }),
     },
 
     seeds(server: Server): void {

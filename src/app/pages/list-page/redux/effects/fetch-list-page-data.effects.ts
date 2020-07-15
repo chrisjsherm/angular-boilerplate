@@ -27,19 +27,21 @@ export class FetchListPageDataEffects {
       this.actions$.pipe(
         ofType(fetchListPageData),
         switchMap(
-          (): Observable<Action> =>
-            this.heroesHttpService.read().pipe(
+          (): Observable<Action> => {
+            return this.heroesHttpService.read().pipe(
               map(
-                (heroes: Hero[]): Action =>
-                  fetchListPageDataSuccess({
+                (heroes: Hero[]): Action => {
+                  return fetchListPageDataSuccess({
                     heroes,
-                  }),
+                  });
+                },
               ),
               catchError(
                 (error: HttpErrorResponse): Observable<Action> =>
                   of(fetchListPageDataFailure({ error })),
               ),
-            ),
+            );
+          },
         ),
       ),
   );
