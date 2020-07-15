@@ -1,1 +1,1 @@
-* Mock list page subscription
+* List table template

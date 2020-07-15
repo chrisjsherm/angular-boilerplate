@@ -13,12 +13,13 @@ import { reducers } from './redux/reducers/app.action-reducer-map';
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { EffectsModule } from '@ngrx/effects';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
+import { ListTableComponent } from './molecules/list-table/list-table.component';
 
 /**
  * Base module for the entire application
  */
 @NgModule({
-  declarations: [AppComponent, ListPageComponent],
+  declarations: [AppComponent, ListPageComponent, ListTableComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
