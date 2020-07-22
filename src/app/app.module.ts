@@ -14,12 +14,18 @@ import { ListPageComponent } from './pages/list-page/list-page.component';
 import { EffectsModule } from '@ngrx/effects';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
 import { ListTableComponent } from './molecules/list-table/list-table.component';
+import { DetailPageComponent } from './pages/detail-page/detail-page.component';
 
 /**
  * Base module for the entire application
  */
 @NgModule({
-  declarations: [AppComponent, ListPageComponent, ListTableComponent],
+  declarations: [
+    AppComponent,
+    ListPageComponent,
+    ListTableComponent,
+    DetailPageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
