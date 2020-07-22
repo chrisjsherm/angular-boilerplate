@@ -24,7 +24,7 @@ export class ListTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<Hero>();
-  displayedColumns = ['fullName', 'phoneNumber'];
+  displayedColumns = ['selected', 'fullName', 'phoneNumber'];
   isDataSourceInitialized: boolean;
   selectionModel = new SelectionModel<Hero>(
     this.allowMultiSelect,

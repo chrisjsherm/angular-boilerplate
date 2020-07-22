@@ -1,8 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ListTableComponent } from './list-table.component';
 import { Hero } from '../../models/hero.entity';
 import { of } from 'rxjs';
+import { MockComponents, MockDirectives } from 'ng-mocks';
+import { MatTable, MatHeaderRowDef, MatRowDef } from '@angular/material/table';
+import { MatSpinner } from '@angular/material/progress-spinner';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 describe('ListTableComponent', (): void => {
   let component: ListTableComponent;
@@ -10,7 +13,11 @@ describe('ListTableComponent', (): void => {
 
   beforeEach(async((): void => {
     TestBed.configureTestingModule({
-      declarations: [ListTableComponent],
+      declarations: [
+        ListTableComponent,
+        MockComponents(MatTable, MatSpinner, MatCheckbox),
+        MockDirectives(MatHeaderRowDef, MatRowDef),
+      ],
     }).compileComponents();
   }));
 

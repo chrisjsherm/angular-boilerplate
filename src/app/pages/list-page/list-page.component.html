@@ -2,8 +2,4 @@
   Heroes
 </h1>
 
-<ul *ngFor="let hero of heroes$ | async">
-  <li>
-    {{ hero | json }}
-  </li>
-</ul>
+<app-list-table [heroes$]="heroes$"></app-list-table>

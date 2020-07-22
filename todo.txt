@@ -1,1 +1,1 @@
-* List table template
+* Detail page component

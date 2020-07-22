@@ -1,1 +1,45 @@
-<p>list-table works!</p>
+<table mat-table [dataSource]="dataSource" [trackBy]="trackById">
+  <!-- Selected column -->
+  <ng-container matColumnDef="selected">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox
+        (change)="$event ? onSelectAllToggled() : null"
+        [checked]="selectionModel.hasValue() && areAllSelected()"
+        [indeterminate]="selectionModel.hasValue() && !areAllSelected()"
+      >
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let hero">
+      <mat-checkbox
+        (click)="$event.stopPropagation()"
+        (change)="$event ? selectionModel.toggle(hero) : null"
+        [checked]="selectionModel.isSelected(hero)"
+      ></mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- Name column -->
+  <ng-container matColumnDef="fullName">
+    <th mat-header-cell *matHeaderCellDef i18n>
+      Name
+    </th>
+
+    <td mat-cell *matCellDef="let hero">
+      {{ hero.firstName }} {{ hero.lastName }}
+    </td>
+  </ng-container>
+
+  <!-- Phone number column -->
+  <ng-container matColumnDef="phoneNumber">
+    <th mat-header-cell *matHeaderCellDef i18n>
+      Phone number
+    </th>
+
+    <td mat-cell *matCellDef="let hero">
+      {{ hero.phoneNumber }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let hero; columns: displayedColumns"></tr>
+</table>

@@ -4,8 +4,8 @@ import { ListPageComponent } from './list-page.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../redux/app-state.interface';
 import { fetchListPageData } from './redux/actions/fetch-list-page-data.actions';
-import { hot } from 'jasmine-marbles';
-import { Hero } from '../../models/hero.entity';
+import { MockComponent } from 'ng-mocks';
+import { ListTableComponent } from '../../molecules/list-table/list-table.component';
 
 describe('ListPageComponent', (): void => {
   let component: ListPageComponent;
@@ -23,7 +23,7 @@ describe('ListPageComponent', (): void => {
           ]),
         },
       ],
-      declarations: [ListPageComponent],
+      declarations: [ListPageComponent, MockComponent(ListTableComponent)],
     }).compileComponents();
 
     store = TestBed.inject(Store) as jasmine.SpyObj<Store<AppState>>;
