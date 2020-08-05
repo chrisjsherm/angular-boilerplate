@@ -1,1 +1,7 @@
 * Detail page component
+- Present hero in template
+
+* List page component
+- Fix expression-changed-after-checked error on line 16 of template when navigating
+back from detail component
+

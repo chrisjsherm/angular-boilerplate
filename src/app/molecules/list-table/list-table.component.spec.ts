@@ -129,12 +129,12 @@ describe('ListTableComponent', (): void => {
   describe('track by id', (): void => {
     it('should return the id property of the hero parameter', (): void => {
       // Act
-      const uuid = component.trackById(0, {
+      const id = component.trackById(0, {
         id: 'caa3a7ab-60d4-47e3-8ea8-ebe38d1ea4cf',
       } as Hero);
 
       // Assert
-      expect(uuid).toBe('caa3a7ab-60d4-47e3-8ea8-ebe38d1ea4cf');
+      expect(id).toBe('caa3a7ab-60d4-47e3-8ea8-ebe38d1ea4cf');
     });
   });
 });

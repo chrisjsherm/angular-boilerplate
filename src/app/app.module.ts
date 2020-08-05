@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
 import { ListTableComponent } from './molecules/list-table/list-table.component';
 import { DetailPageComponent } from './pages/detail-page/detail-page.component';
+import { FetchDetailPageDataEffects } from './pages/detail-page/redux/effects/fetch-detail-page-data.effects';
 
 /**
  * Base module for the entire application
@@ -34,7 +35,10 @@ import { DetailPageComponent } from './pages/detail-page/detail-page.component';
     AngularMaterialModule,
     LayoutModule,
     StoreModule.forRoot(reducers),
-    EffectsModule.forRoot([FetchListPageDataEffects]),
+    EffectsModule.forRoot([
+      FetchListPageDataEffects,
+      FetchDetailPageDataEffects,
+    ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
