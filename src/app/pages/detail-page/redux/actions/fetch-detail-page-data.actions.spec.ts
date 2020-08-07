@@ -41,7 +41,22 @@ describe('Fetch detail page data actions', (): void => {
     expect(result.type).toBe(
       '[DetailPageEffects] Fetch detail page data success',
     );
-    expect(result.heroes).toBe(data);
+    expect(result.heroes).toEqual([
+      {
+        id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+        firstName: 'George',
+        lastName: 'Washington',
+        phoneNumber: '(703) 111-1111',
+        avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
+      },
+      {
+        id: '26bbe379-b165-4ccf-b993-aefff76b4790',
+        firstName: 'John',
+        lastName: 'Wayne',
+        phoneNumber: '(210) 555-5555',
+        avatarUrl: 'https://avatar.com/jwayne/profile.jpg',
+      },
+    ]);
   });
 
   it('should issue a fetch heroes failure action', (): void => {
