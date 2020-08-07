@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/heroes', pathMatch: 'full' },
   { path: 'heroes', component: ListPageComponent },
   { path: 'heroes/:id', component: DetailPageComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 /**
