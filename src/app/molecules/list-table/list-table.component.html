@@ -1,4 +1,9 @@
-<table mat-table [dataSource]="dataSource" [trackBy]="trackById">
+<table
+  *ngIf="heroes$ | async; else fetchingData"
+  mat-table
+  [dataSource]="dataSource"
+  [trackBy]="trackById"
+>
   <!-- Selected column -->
   <ng-container matColumnDef="selected">
     <th mat-header-cell *matHeaderCellDef>
@@ -43,3 +48,7 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let hero; columns: displayedColumns"></tr>
 </table>
+
+<ng-template #fetchingData>
+  <mat-spinner diameter="25"></mat-spinner>
+</ng-template>

@@ -39,6 +39,43 @@ describe('ListTableComponent', (): void => {
     expect(component).toBeTruthy();
   });
 
+  it(
+    'should unsubscribe from the heroes$ input when the component gets ' +
+      'destroyed',
+    (): void => {
+      // Arrange
+      const heroesSubscriptionSpy = spyOn(
+        component['heroesSubscription'],
+        'unsubscribe',
+      );
+
+      // Act
+      component.ngOnDestroy();
+
+      // Assert
+      expect(heroesSubscriptionSpy).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  it(
+    'should not unsubscribe from the heroes$ input when the component gets ' +
+      'destroyed if the subscription property is not set',
+    (): void => {
+      // Arrange
+      const heroesSubscriptionSpy = spyOn(
+        component['heroesSubscription'],
+        'unsubscribe',
+      );
+
+      // Act
+      component['heroesSubscription'] = undefined;
+      component.ngOnDestroy();
+
+      // Assert
+      expect(heroesSubscriptionSpy).not.toHaveBeenCalled();
+    },
+  );
+
   describe('are all selected', (): void => {
     it(
       "should determine all rows are selected when the selection model's " +

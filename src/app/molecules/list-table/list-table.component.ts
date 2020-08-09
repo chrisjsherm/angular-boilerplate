@@ -1,44 +1,64 @@
-import { Component, Input, ViewChild, AfterViewInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
-import { filter, take } from 'rxjs/operators';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Hero } from '../../models/hero.entity';
+import { debounceTime } from 'rxjs/operators';
 
 /**
  * List of heroes with pagination and actions
  */
-@UntilDestroy()
 @Component({
   selector: 'app-list-table',
   templateUrl: './list-table.component.html',
   styleUrls: ['./list-table.component.scss'],
 })
-export class ListTableComponent implements AfterViewInit {
-  private readonly allowMultiSelect = true;
-  private readonly initialSelection = [];
-
+export class ListTableComponent implements AfterViewInit, OnDestroy {
   @Input() heroes$: Observable<Hero[]>;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  dataSource = new MatTableDataSource<Hero>();
-  displayedColumns = ['selected', 'fullName', 'phoneNumber'];
-  isDataSourceInitialized: boolean;
-  selectionModel = new SelectionModel<Hero>(
-    this.allowMultiSelect,
-    this.initialSelection,
-  );
+  dataSource: MatTableDataSource<Hero>;
+  displayedColumns: string[];
+  selectionModel: SelectionModel<Hero>;
 
-  constructor() {}
+  private readonly heroes$DebounceMilliseconds = 100;
+  private heroesSubscription: Subscription;
+
+  constructor() {
+    this.dataSource = new MatTableDataSource<Hero>([]);
+    this.displayedColumns = ['selected', 'fullName', 'phoneNumber'];
+    this.selectionModel = new SelectionModel<Hero>(true, []);
+  }
 
   /**
    * Set up the MatTable's dataSource input.
    * Run AfterViewInit instead of OnInit because we're using ViewChild references.
    */
   ngAfterViewInit(): void {
-    this.initializeDataSource();
+    this.dataSource.paginator = this.paginator;
+    this.heroesSubscription = this.heroes$
+      // Debounce to avoid value churn, especially on page load when clients
+      // may be refreshing data
+      .pipe(debounceTime(this.heroes$DebounceMilliseconds))
+      .subscribe((heroes: Hero[]): void => {
+        this.dataSource.data = heroes;
+      });
+  }
+
+  /**
+   * Unsubscribe from the heros$ Observable when Angular destroys the component
+   */
+  ngOnDestroy(): void {
+    if (this.heroesSubscription) {
+      this.heroesSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -77,24 +97,5 @@ export class ListTableComponent implements AfterViewInit {
    */
   trackById(index: number, hero: Hero): string {
     return hero.id;
-  }
-
-  /**
-   * Initialize the MatTableDataSource data and paginator properties
-   */
-  private initializeDataSource(): void {
-    const heroesNotNull$ = this.heroes$.pipe(
-      filter((heroes: Hero[]): boolean => heroes !== null),
-      untilDestroyed(this),
-    );
-
-    heroesNotNull$.subscribe((heroes: Hero[]): void => {
-      this.dataSource.data = heroes;
-    });
-
-    heroesNotNull$.pipe(take(1)).subscribe((): void => {
-      this.dataSource.paginator = this.paginator;
-      this.isDataSourceInitialized = true;
-    });
   }
 }
