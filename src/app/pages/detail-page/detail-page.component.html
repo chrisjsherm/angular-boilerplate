@@ -1,3 +1,24 @@
-<pre>
-  {{ hero$ | async | json }}
-</pre>
+<ng-container *ngIf="hero$ | async as hero; else fetchingData">
+  <img [src]="hero.avatarUrl" i18n-alt alt="Avatar" />
+
+  <h1>
+    {{ hero.firstName }}
+    {{ hero.lastName }}
+  </h1>
+
+  <h2 i18n>
+    Info
+  </h2>
+
+  <div>
+    <span>Phone number</span>
+    <span>{{ hero.phoneNumber }}</span>
+  </div>
+  <pre>
+    {{ hero | json }}
+  </pre>
+</ng-container>
+
+<ng-template #fetchingData>
+  <mat-spinner diameter="25"></mat-spinner>
+</ng-template>
