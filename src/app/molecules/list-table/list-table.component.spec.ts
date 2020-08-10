@@ -76,6 +76,20 @@ describe('ListTableComponent', (): void => {
     },
   );
 
+  it('should set the data source to an empty array when heroes$ is null', (): void => {
+    // Arrange
+    // Set up new component to avoid polluting other tests
+    fixture = TestBed.createComponent(ListTableComponent);
+    component = fixture.componentInstance;
+    component.heroes$ = of(null);
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    expect(component.dataSource.data).toEqual([]);
+  });
+
   describe('are all selected', (): void => {
     it(
       "should determine all rows are selected when the selection model's " +

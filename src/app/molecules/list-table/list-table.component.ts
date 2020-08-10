@@ -10,6 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { Hero } from '../../models/hero.entity';
+import { MatSort } from '@angular/material/sort';
 import { debounceTime } from 'rxjs/operators';
 
 /**
@@ -22,7 +23,8 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class ListTableComponent implements AfterViewInit, OnDestroy {
   @Input() heroes$: Observable<Hero[]>;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   dataSource: MatTableDataSource<Hero>;
   displayedColumns: string[];
@@ -43,12 +45,15 @@ export class ListTableComponent implements AfterViewInit, OnDestroy {
    */
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
     this.heroesSubscription = this.heroes$
       // Debounce to avoid value churn, especially on page load when clients
       // may be refreshing data
       .pipe(debounceTime(this.heroes$DebounceMilliseconds))
       .subscribe((heroes: Hero[]): void => {
-        this.dataSource.data = heroes;
+        // MatSort cannot handle non-Array values, so default to empty when
+        // undefined or null
+        this.dataSource.data = heroes ?? [];
       });
   }
 

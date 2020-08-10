@@ -1,2 +1,5 @@
 * Detail page component
 - Present hero in template
+
+* List table component
+- Write custom sort handler to sort by lastName, firstName

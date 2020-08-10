@@ -1,9 +1,4 @@
-<table
-  *ngIf="heroes$ | async; else fetchingData"
-  mat-table
-  [dataSource]="dataSource"
-  [trackBy]="trackById"
->
+<table mat-table matSort [dataSource]="dataSource" [trackBy]="trackById">
   <!-- Selected column -->
   <ng-container matColumnDef="selected">
     <th mat-header-cell *matHeaderCellDef>
@@ -25,18 +20,18 @@
 
   <!-- Name column -->
   <ng-container matColumnDef="fullName">
-    <th mat-header-cell *matHeaderCellDef i18n>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
       Name
     </th>
 
     <td mat-cell *matCellDef="let hero">
-      <a [routerLink]="hero.id">{{ hero.firstName }} {{ hero.lastName }}</a>
+      <a [routerLink]="hero.id">{{ hero.fullName }}</a>
     </td>
   </ng-container>
 
   <!-- Phone number column -->
   <ng-container matColumnDef="phoneNumber">
-    <th mat-header-cell *matHeaderCellDef i18n>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
       Phone number
     </th>
 
@@ -48,7 +43,3 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let hero; columns: displayedColumns"></tr>
 </table>
-
-<ng-template #fetchingData>
-  <mat-spinner diameter="25"></mat-spinner>
-</ng-template>
