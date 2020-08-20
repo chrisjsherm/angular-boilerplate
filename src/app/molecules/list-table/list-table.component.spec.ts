@@ -1,11 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListTableComponent } from './list-table.component';
 import { Hero } from '../../models/hero.entity';
-import { of } from 'rxjs';
 import { MockComponents, MockDirectives } from 'ng-mocks';
 import { MatTable, MatHeaderRowDef, MatRowDef } from '@angular/material/table';
 import { MatSpinner } from '@angular/material/progress-spinner';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatSort } from '@angular/material/sort';
+import { By } from '@angular/platform-browser';
+import { SimpleChange } from '@angular/core';
 
 describe('ListTableComponent', (): void => {
   let component: ListTableComponent;
@@ -15,8 +17,8 @@ describe('ListTableComponent', (): void => {
     TestBed.configureTestingModule({
       declarations: [
         ListTableComponent,
-        MockComponents(MatTable, MatSpinner, MatCheckbox),
-        MockDirectives(MatHeaderRowDef, MatRowDef),
+        MockComponents(MatSpinner, MatCheckbox),
+        MockDirectives(MatHeaderRowDef, MatRowDef, MatTable),
       ],
     }).compileComponents();
   }));
@@ -24,14 +26,29 @@ describe('ListTableComponent', (): void => {
   beforeEach((): void => {
     fixture = TestBed.createComponent(ListTableComponent);
     component = fixture.componentInstance;
-    component.heroes$ = of([
+
+    const heroes: Hero[] = [
       {
         id: 'caa3a7ab-60d4-47e3-8ea8-ebe38d1ea4cf',
+        lastName: 'Zebra',
       } as Hero,
       {
         id: '63631a44-0776-40cc-979a-fc7564230c0b',
+        lastName: 'Caboose',
       } as Hero,
-    ]);
+    ];
+
+    // Trigger onChanges manually so we don't have to create a wrapper component
+    component.heroes = heroes;
+    component.ngOnChanges({
+      heroes: {
+        currentValue: heroes,
+        previousValue: undefined,
+        firstChange: true,
+        isFirstChange: (): boolean => true,
+      },
+    });
+
     fixture.detectChanges();
   });
 
@@ -39,58 +56,77 @@ describe('ListTableComponent', (): void => {
     expect(component).toBeTruthy();
   });
 
-  it(
-    'should unsubscribe from the heroes$ input when the component gets ' +
-      'destroyed',
-    (): void => {
-      // Arrange
-      const heroesSubscriptionSpy = spyOn(
-        component['heroesSubscription'],
-        'unsubscribe',
-      );
+  describe('OnChanges', (): void => {
+    it(
+      'should not update the dataSource when ngChanges does not have a heroes ' +
+        'property',
+      (): void => {
+        // Arrange
+        const heroes = component.dataSource.data;
 
-      // Act
-      component.ngOnDestroy();
+        // Act
+        component.ngOnChanges({});
 
-      // Assert
-      expect(heroesSubscriptionSpy).toHaveBeenCalledTimes(1);
-    },
-  );
+        // Expect
+        expect(component.dataSource.data).toBe(heroes);
+      },
+    );
 
-  it(
-    'should not unsubscribe from the heroes$ input when the component gets ' +
-      'destroyed if the subscription property is not set',
-    (): void => {
-      // Arrange
-      const heroesSubscriptionSpy = spyOn(
-        component['heroesSubscription'],
-        'unsubscribe',
-      );
+    it(
+      'should not initialize sorting when the currentValue of heroes is ' +
+        'undefined',
+      (): void => {
+        // Arrange
+        component.dataSource.sort = undefined;
 
-      // Act
-      component['heroesSubscription'] = undefined;
-      component.ngOnDestroy();
+        // Act
+        component.ngOnChanges({
+          heroes: {
+            currentValue: undefined,
+          } as SimpleChange,
+        });
+        fixture.detectChanges();
 
-      // Assert
-      expect(heroesSubscriptionSpy).not.toHaveBeenCalled();
-    },
-  );
-
-  it('should set the data source to an empty array when heroes$ is null', (): void => {
-    // Arrange
-    // Set up new component to avoid polluting other tests
-    fixture = TestBed.createComponent(ListTableComponent);
-    component = fixture.componentInstance;
-    component.heroes$ = of(null);
-
-    // Act
-    fixture.detectChanges();
-
-    // Assert
-    expect(component.dataSource.data).toEqual([]);
+        expect(component.dataSource.sort).toBeUndefined();
+      },
+    );
   });
 
-  describe('are all selected', (): void => {
+  describe('AfterViewInit', (): void => {
+    it(
+      'should initialize sorting when the dataSource does not have a value for its' +
+        'sort property and heroes does have a value',
+      (): void => {
+        // Arrange
+        component.sort = new MatSort();
+
+        // Assert
+        expect(component.dataSource.sort).toBeUndefined();
+
+        // Act
+        component.ngAfterViewInit();
+
+        // Assert
+        expect(component.dataSource.sort).toBeDefined();
+      },
+    );
+
+    it('should not initialize sorting heroes does not have a value', (): void => {
+      // Arrange
+      component.heroes = undefined;
+
+      // Assert
+      expect(component.dataSource.sort).toBeUndefined();
+
+      // Act
+      component.ngAfterViewInit();
+
+      // Assert
+      expect(component.dataSource.sort).toBeUndefined();
+    });
+  });
+
+  describe('Are all selected', (): void => {
     it(
       "should determine all rows are selected when the selection model's " +
         "selected length property equals the length of the data source's filtered data " +
@@ -132,7 +168,7 @@ describe('ListTableComponent', (): void => {
     );
   });
 
-  describe('toggle selected', (): void => {
+  describe('Toggle selected', (): void => {
     it('should start with no heroes selected', (): void => {
       // Assert
       expect(component.selectionModel.selected.length).toBe(0);
@@ -177,7 +213,7 @@ describe('ListTableComponent', (): void => {
     });
   });
 
-  describe('track by id', (): void => {
+  describe('Track by id', (): void => {
     it('should return the id property of the hero parameter', (): void => {
       // Act
       const id = component.trackById(0, {
@@ -186,6 +222,91 @@ describe('ListTableComponent', (): void => {
 
       // Assert
       expect(id).toBe('caa3a7ab-60d4-47e3-8ea8-ebe38d1ea4cf');
+    });
+  });
+
+  describe('Sorting', (): void => {
+    it('should initialize the dataSource sort property on ngAfterViewInit', (): void => {
+      // Arrange
+      component.sort = new MatSort();
+
+      // Act
+      component.ngAfterViewInit();
+
+      // Assert
+      expect(component.dataSource.sort).toBe(component.sort);
+    });
+
+    it('should use the custom sortingDataAccessor', (): void => {
+      // Arrange
+      component.sort = new MatSort();
+      component.ngAfterViewInit();
+      const sortingDataAccessorSpy = spyOn(
+        component.dataSource,
+        'sortingDataAccessor',
+      ).and.callThrough();
+
+      // Act
+      component.sort.sort({
+        id: 'lastName',
+        start: 'asc',
+        disableClear: false,
+      });
+
+      // Assert
+      // Call twice, once for each Hero
+      expect(sortingDataAccessorSpy).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('Template', (): void => {
+    it('should show the spinner when heroes are undefined', (): void => {
+      // Arrange
+      component.heroes = undefined;
+      fixture.detectChanges();
+      const spinner: HTMLElement = fixture.debugElement.query(
+        By.directive(MatSpinner),
+      ).nativeElement;
+
+      // Assert
+      expect(spinner).toBeDefined();
+    });
+
+    it('should show the empty message when heroes is empty', (): void => {
+      // Arrange
+      component.heroes = [];
+      component.ngOnChanges({
+        heroes: {
+          currentValue: [],
+          previousValue: [
+            {
+              id: 'caa3a7ab-60d4-47e3-8ea8-ebe38d1ea4cf',
+              lastName: 'Zebra',
+            } as Hero,
+            {
+              id: '63631a44-0776-40cc-979a-fc7564230c0b',
+              lastName: 'Caboose',
+            } as Hero,
+          ],
+          firstChange: false,
+          isFirstChange: (): boolean => false,
+        },
+      });
+      fixture.detectChanges();
+      const empty: HTMLElement = fixture.debugElement.query(By.css('span'))
+        .nativeElement;
+
+      // Assert
+      expect(empty.innerText).toBe('No heroes');
+    });
+
+    it('should show the heroes table when there are heroes', (): void => {
+      // Arrange
+      const table: HTMLElement = fixture.debugElement.query(By.css('table'))
+        .nativeElement;
+
+      // Assert
+      expect(table).toBeDefined();
     });
   });
 });

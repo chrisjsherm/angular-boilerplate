@@ -6,8 +6,12 @@ export const selectHeroes = (state: AppState): Hero[] => state.heroes;
 
 export const selectHeroById = createSelector(
   selectHeroes,
-  (heroes: Hero[], heroId: string): Hero | null => {
-    if (!heroes) {
+  (heroes: Hero[], heroId: string): Hero => {
+    if (heroes === undefined) {
+      return undefined;
+    }
+
+    if (heroes === null) {
       return null;
     }
 

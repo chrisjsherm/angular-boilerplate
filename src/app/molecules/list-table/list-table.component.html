@@ -1,11 +1,18 @@
-<table mat-table matSort [dataSource]="dataSource" [trackBy]="trackById">
+<!-- Using [hidden] instead of *ngIf to allow ViewChildren to have access to DOM -->
+<table
+  [hidden]="heroes == null || heroes.length === 0"
+  mat-table
+  matSort
+  [dataSource]="dataSource"
+  [trackBy]="trackById"
+>
   <!-- Selected column -->
   <ng-container matColumnDef="selected">
     <th mat-header-cell *matHeaderCellDef>
       <mat-checkbox
         (change)="$event ? onSelectAllToggled() : null"
-        [checked]="selectionModel.hasValue() && areAllSelected()"
-        [indeterminate]="selectionModel.hasValue() && !areAllSelected()"
+        [checked]="selectionModel?.hasValue() && areAllSelected()"
+        [indeterminate]="selectionModel?.hasValue() && !areAllSelected()"
       >
       </mat-checkbox>
     </th>
@@ -18,14 +25,25 @@
     </td>
   </ng-container>
 
-  <!-- Name column -->
-  <ng-container matColumnDef="fullName">
+  <!-- First name column -->
+  <ng-container matColumnDef="firstName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
-      Name
+      First name
     </th>
 
     <td mat-cell *matCellDef="let hero">
-      <a [routerLink]="hero.id">{{ hero.fullName }}</a>
+      <a [routerLink]="hero.id">{{ hero.firstName }}</a>
+    </td>
+  </ng-container>
+
+  <!-- Last name column -->
+  <ng-container matColumnDef="lastName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
+      Last name
+    </th>
+
+    <td mat-cell *matCellDef="let hero">
+      <a [routerLink]="hero.id">{{ hero.lastName }}</a>
     </td>
   </ng-container>
 
@@ -43,3 +61,9 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let hero; columns: displayedColumns"></tr>
 </table>
+
+<ng-container [ngSwitch]="heroes === undefined">
+  <mat-spinner *ngSwitchCase="true" diameter="25"></mat-spinner>
+
+  <span *ngSwitchDefault>No heroes</span>
+</ng-container>

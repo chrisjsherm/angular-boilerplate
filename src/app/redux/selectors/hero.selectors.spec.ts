@@ -50,7 +50,20 @@ describe('Hero Selectors', (): void => {
   });
 
   describe('selectHeroById', (): void => {
-    it('should return null when there are no heroes', (): void => {
+    it('should return undefined when heroes have an undefined state value', (): void => {
+      // Act
+      const hero: Hero = selectHeroById(
+        {
+          heroes: undefined,
+        },
+        '1c300a8d-0fd0-41a9-98e2-de19a9ee8747',
+      );
+
+      // Assert
+      expect(hero).toEqual(undefined);
+    });
+
+    it('should return null when heroes have a null state value', (): void => {
       // Act
       const hero: Hero = selectHeroById(
         {

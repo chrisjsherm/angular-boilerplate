@@ -6,6 +6,7 @@ import { AppState } from '../../redux/app-state.interface';
 import { fetchListPageData } from './redux/actions/fetch-list-page-data.actions';
 import { MockComponent } from 'ng-mocks';
 import { ListTableComponent } from '../../molecules/list-table/list-table.component';
+import { of } from 'rxjs';
 
 describe('ListPageComponent', (): void => {
   let component: ListPageComponent;
@@ -30,6 +31,8 @@ describe('ListPageComponent', (): void => {
   }));
 
   beforeEach((): void => {
+    store.pipe.and.returnValue(of([]));
+
     fixture = TestBed.createComponent(ListPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -43,4 +46,41 @@ describe('ListPageComponent', (): void => {
     // Assert
     expect(store.dispatch).toHaveBeenCalledWith(fetchListPageData());
   });
+
+  it(
+    'should unsubscribe from the heroesSubscription input when the component gets ' +
+      'destroyed',
+    (): void => {
+      // Arrange
+      const heroesSubscriptionSpy = spyOn(
+        component['heroesSubscription'],
+        'unsubscribe',
+      );
+
+      // Act
+      component.ngOnDestroy();
+
+      // Assert
+      expect(heroesSubscriptionSpy).toHaveBeenCalledTimes(1);
+    },
+  );
+
+  it(
+    'should not unsubscribe from the heroesSubscription input when the component ' +
+      'gets destroyed if the subscription property is not set',
+    (): void => {
+      // Arrange
+      const heroesSubscriptionSpy = spyOn(
+        component['heroesSubscription'],
+        'unsubscribe',
+      );
+
+      // Act
+      component['heroesSubscription'] = undefined;
+      component.ngOnDestroy();
+
+      // Assert
+      expect(heroesSubscriptionSpy).not.toHaveBeenCalled();
+    },
+  );
 });
