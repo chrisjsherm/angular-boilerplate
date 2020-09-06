@@ -1,5 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatIcon } from '@angular/material/icon';
+import { MatNavList } from '@angular/material/list';
+import {
+  MatSidenav,
+  MatSidenavContainer,
+  MatSidenavContent,
+} from '@angular/material/sidenav';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockComponents } from 'ng-mocks';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', (): void => {
@@ -8,7 +17,18 @@ describe('AppComponent', (): void => {
 
   beforeEach(async((): void => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      declarations: [
+        AppComponent,
+        MockComponents(
+          MatToolbar,
+          MatToolbarRow,
+          MatSidenavContainer,
+          MatSidenav,
+          MatSidenavContent,
+          MatNavList,
+          MatIcon,
+        ),
+      ],
       imports: [RouterTestingModule],
     }).compileComponents();
   }));
