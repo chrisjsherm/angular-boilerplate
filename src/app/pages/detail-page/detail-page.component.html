@@ -1,21 +1,22 @@
 <ng-container *ngIf="hero$ | async as hero; else fetchingData">
-  <img [src]="hero.avatarUrl" i18n-alt alt="Avatar" />
+  <div class="container">
+    <img [src]="hero.avatarUrl" i18n-alt alt="Hero avatar" />
+    <h1 class="name">
+      {{ hero.firstName }}
+      {{ hero.lastName }}
+    </h1>
 
-  <h1>
-    {{ hero.firstName }}
-    {{ hero.lastName }}
-  </h1>
+    <div class="info">
+      <h2 i18n>
+        Info
+      </h2>
 
-  <h2 i18n>
-    Info
-  </h2>
-
-  <div>
-    <span>Phone number</span> <span>{{ hero.phoneNumber }}</span>
+      <dl>
+        <dt i18n>Phone number</dt>
+        <dd>{{ hero.phoneNumber }}</dd>
+      </dl>
+    </div>
   </div>
-  <pre>
-    {{ hero | json }}
-  </pre>
 </ng-container>
 
 <ng-template #fetchingData>

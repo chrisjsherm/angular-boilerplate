@@ -1,15 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { DetailPageComponent } from './detail-page.component';
-import { AppState } from '../../redux/app-state.interface';
-import { ActivatedRoute } from '@angular/router';
-import { of, BehaviorSubject } from 'rxjs';
-import { fetchDetailPageData } from './redux/actions/fetch-detail-page-data.actions';
-import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { MatSpinner } from '@angular/material/progress-spinner';
 import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 import { MockComponents } from 'ng-mocks';
-import { MatSpinner } from '@angular/material/progress-spinner';
-import { Store } from '@ngrx/store';
+import { BehaviorSubject, of } from 'rxjs';
+import { AppState } from '../../redux/app-state.interface';
+import { DetailPageComponent } from './detail-page.component';
+import { fetchDetailPageData } from './redux/actions/fetch-detail-page-data.actions';
 
 describe('DetailPageComponent', (): void => {
   const initialState: AppState = {
@@ -143,17 +143,10 @@ describe('DetailPageComponent', (): void => {
 
   it('should update the view with the hero matching the route parameter', (): void => {
     // Arrange
-    const hero: HTMLElement = fixture.debugElement.query(By.css('pre'))
+    const heading: HTMLElement = fixture.debugElement.query(By.css('h1'))
       .nativeElement;
 
     // Assert
-    expect(JSON.parse(hero.innerText.trim())).toEqual({
-      id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
-      firstName: 'George',
-      lastName: 'Washington',
-      fullName: 'George Washington',
-      phoneNumber: '(703) 111-1111',
-      avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
-    });
+    expect(heading.innerText).toEqual('George Washington');
   });
 });

@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  grid-template-columns: 128px auto;
+  grid-template-rows: 128px auto;
+  gap: 30px 30px;
+}
+
+.name {
+  align-self: center;
+}
+
+.info {
+  grid-column-start: span 2;
+}
+
+dl {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+dt {
+  font-weight: 500;
+}
