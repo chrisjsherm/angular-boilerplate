@@ -1,16 +1,17 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   Input,
-  ViewChild,
-  AfterViewInit,
   OnChanges,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
-import { Hero } from '../../models/hero.entity';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Hero } from '../../models/hero.entity';
 
 /**
  * List of heroes with pagination and actions
@@ -19,6 +20,7 @@ import { MatSort } from '@angular/material/sort';
   selector: 'app-list-table',
   templateUrl: './list-table.component.html',
   styleUrls: ['./list-table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListTableComponent implements AfterViewInit, OnChanges {
   @Input() heroes: Hero[];
@@ -31,12 +33,7 @@ export class ListTableComponent implements AfterViewInit, OnChanges {
 
   constructor() {
     this.dataSource = new MatTableDataSource<Hero>([]);
-    this.displayedColumns = [
-      'selected',
-      'firstName',
-      'lastName',
-      'phoneNumber',
-    ];
+    this.displayedColumns = ['selected', 'fullName', 'phoneNumber'];
     this.selectionModel = new SelectionModel<Hero>(
       // Allow multiple selection
       true,
@@ -154,6 +151,8 @@ export class ListTableComponent implements AfterViewInit, OnChanges {
       sortHeaderId: string,
     ): string | number => {
       switch (sortHeaderId) {
+        case 'fullName':
+          return hero.lastName + hero.firstName;
         default:
           return hero[sortHeaderId];
       }

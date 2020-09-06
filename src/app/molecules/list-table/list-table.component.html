@@ -25,25 +25,14 @@
     </td>
   </ng-container>
 
-  <!-- First name column -->
-  <ng-container matColumnDef="firstName">
+  <!-- Full name column -->
+  <ng-container matColumnDef="fullName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
-      First name
+      Full name
     </th>
 
     <td mat-cell *matCellDef="let hero">
-      <a [routerLink]="hero.id">{{ hero.firstName }}</a>
-    </td>
-  </ng-container>
-
-  <!-- Last name column -->
-  <ng-container matColumnDef="lastName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
-      Last name
-    </th>
-
-    <td mat-cell *matCellDef="let hero">
-      <a [routerLink]="hero.id">{{ hero.lastName }}</a>
+      <a [routerLink]="hero.id">{{ hero.firstName }} {{ hero.lastName }}</a>
     </td>
   </ng-container>
 
@@ -62,7 +51,10 @@
   <tr mat-row *matRowDef="let hero; columns: displayedColumns"></tr>
 </table>
 
-<ng-container [ngSwitch]="heroes === undefined">
+<ng-container
+  *ngIf="heroes == null || heroes.length === 0"
+  [ngSwitch]="heroes === undefined"
+>
   <mat-spinner *ngSwitchCase="true" diameter="25"></mat-spinner>
 
   <span *ngSwitchDefault>No heroes</span>
