@@ -1,2 +1,6 @@
-* Detail page component
-- Present hero in template
+* Upgrade to Angular 10
+
+* Add edit capability
+
+* Add user management
+- Service vs. local

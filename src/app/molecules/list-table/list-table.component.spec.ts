@@ -1,6 +1,7 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckbox } from '@angular/material/checkbox';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSpinner } from '@angular/material/progress-spinner';
 import { MatSort } from '@angular/material/sort';
 import { MatHeaderRowDef, MatRowDef, MatTable } from '@angular/material/table';
@@ -50,7 +51,13 @@ describe('ListTableComponent', (): void => {
         HostForListTableComponent,
         ListTableComponent,
         MockComponents(MatSpinner, MatCheckbox),
-        MockDirectives(MatHeaderRowDef, MatRowDef, MatTable),
+        MockDirectives(
+          MatHeaderRowDef,
+          MatRowDef,
+          MatTable,
+          MatFormField,
+          MatLabel,
+        ),
       ],
     }).compileComponents();
   }));
@@ -135,6 +142,72 @@ describe('ListTableComponent', (): void => {
 
       // Assert
       expect(listTableComponent.dataSource.sort).toBeUndefined();
+    });
+  });
+
+  describe('Hide table data property', (): void => {
+    it('should determine the table data is not hidden', (): void => {
+      expect(listTableComponent.hideTableData).toBeFalse();
+    });
+
+    it('should determine the table data is hidden when heroes are undefined', (): void => {
+      // Arrange
+      hostComponent.heroes = undefined;
+      hostFixture.detectChanges();
+
+      // Assert
+      expect(listTableComponent.hideTableData).toBeTrue();
+    });
+
+    it('should determine the table data is hidden when heroes are null', (): void => {
+      // Arrange
+      hostComponent.heroes = null;
+      hostFixture.detectChanges();
+
+      // Assert
+      expect(listTableComponent.hideTableData).toBeTrue();
+    });
+
+    it(
+      'should determine the table data is hidden when the heroes list is ' +
+        'empty',
+      (): void => {
+        // Arrange
+        hostComponent.heroes = [];
+        hostFixture.detectChanges();
+
+        // Assert
+        expect(listTableComponent.hideTableData).toBeTrue();
+      },
+    );
+  });
+
+  describe('Filter', (): void => {
+    it('should filter the data according to the filter input value', (): void => {
+      // Arrange
+      const filterInput: HTMLInputElement = hostFixture.debugElement.query(
+        By.css('input'),
+      ).nativeElement;
+
+      // Act
+      filterInput.value = 'Ge';
+      const eKeyPress = new KeyboardEvent('keyup', {
+        key: 'e',
+      });
+      filterInput.dispatchEvent(eKeyPress);
+      hostFixture.detectChanges();
+
+      // Assert
+      expect(listTableComponent.dataSource.filteredData).toEqual([
+        {
+          id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+          firstName: 'George',
+          lastName: 'Washington',
+          fullName: 'George Washington',
+          phoneNumber: '(703) 111-1111',
+          avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
+        },
+      ]);
     });
   });
 
@@ -340,7 +413,7 @@ describe('ListTableComponent', (): void => {
       // Arrange
       hostComponent.heroes = [];
       hostFixture.detectChanges();
-      const empty: HTMLElement = hostFixture.debugElement.query(By.css('span'))
+      const empty: HTMLElement = hostFixture.debugElement.query(By.css('div'))
         .nativeElement;
 
       // Assert

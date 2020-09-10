@@ -1,55 +1,63 @@
 <!-- Using [hidden] instead of *ngIf to allow ViewChildren to have access to DOM -->
-<table
-  [hidden]="heroes == null || heroes.length === 0"
-  mat-table
-  matSort
-  [dataSource]="dataSource"
-  [trackBy]="trackById"
->
-  <!-- Selected column -->
-  <ng-container matColumnDef="selected">
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox
-        (change)="$event ? onSelectAllToggled() : null"
-        [checked]="selectionModel?.hasValue() && areAllSelected()"
-        [indeterminate]="selectionModel?.hasValue() && !areAllSelected()"
-      >
-      </mat-checkbox>
-    </th>
-    <td mat-cell *matCellDef="let hero">
-      <mat-checkbox
-        (click)="$event.stopPropagation()"
-        (change)="$event ? selectionModel.toggle(hero) : null"
-        [checked]="selectionModel.isSelected(hero)"
-      ></mat-checkbox>
-    </td>
-  </ng-container>
+<section [hidden]="hideTableData">
+  <mat-form-field>
+    <mat-label i18n>Filter</mat-label>
+    <input matInput (keyup)="applyFilter(filterInput.value)" #filterInput />
+  </mat-form-field>
 
-  <!-- Full name column -->
-  <ng-container matColumnDef="fullName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
-      Full name
-    </th>
+  <table mat-table matSort [dataSource]="dataSource" [trackBy]="trackById">
+    <!-- Selected column -->
+    <ng-container matColumnDef="selected">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          (change)="$event ? onSelectAllToggled() : null"
+          [checked]="selectionModel?.hasValue() && areAllSelected()"
+          [indeterminate]="selectionModel?.hasValue() && !areAllSelected()"
+        >
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let hero">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selectionModel.toggle(hero) : null"
+          [checked]="selectionModel.isSelected(hero)"
+        ></mat-checkbox>
+      </td>
+    </ng-container>
 
-    <td mat-cell *matCellDef="let hero">
-      <a [routerLink]="hero.id">{{ hero.firstName }} {{ hero.lastName }}</a>
-    </td>
-  </ng-container>
+    <!-- Full name column -->
+    <ng-container matColumnDef="fullName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
+        Full name
+      </th>
 
-  <!-- Phone number column -->
-  <ng-container matColumnDef="phoneNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
-      Phone number
-    </th>
+      <td mat-cell *matCellDef="let hero">
+        <a [routerLink]="hero.id">{{ hero.firstName }} {{ hero.lastName }}</a>
+      </td>
+    </ng-container>
 
-    <td mat-cell *matCellDef="let hero">
-      {{ hero.phoneNumber }}
-    </td>
-  </ng-container>
+    <!-- Phone number column -->
+    <ng-container matColumnDef="phoneNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>
+        Phone number
+      </th>
 
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let hero; columns: displayedColumns"></tr>
-</table>
+      <td mat-cell *matCellDef="let hero">
+        {{ hero.phoneNumber }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let hero; columns: displayedColumns"></tr>
+
+    <!-- Row shown when no data matches the filter in Angular Material 10 -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">
+        No data matching the filter "{{ filterInput.value }}"
+      </td>
+    </tr>
+  </table>
+</section>
 
 <ng-container
   *ngIf="heroes == null || heroes.length === 0"
@@ -57,5 +65,5 @@
 >
   <mat-spinner *ngSwitchCase="true" diameter="25"></mat-spinner>
 
-  <span *ngSwitchDefault>No heroes</span>
+  <div *ngSwitchDefault>No heroes</div>
 </ng-container>

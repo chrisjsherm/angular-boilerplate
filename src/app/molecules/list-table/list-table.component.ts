@@ -43,6 +43,17 @@ export class ListTableComponent implements AfterViewInit, OnChanges {
   }
 
   /**
+   * Whether table data should be hidden from view
+   */
+  get hideTableData(): boolean {
+    return (
+      this.heroes === null ||
+      this.heroes === undefined ||
+      this.heroes.length === 0
+    );
+  }
+
+  /**
    * When an Input property changes, update the heroes property
    *
    * @param changes Input property details by property name
@@ -71,6 +82,15 @@ export class ListTableComponent implements AfterViewInit, OnChanges {
       // MatSort will complain it cannot call slice on undefined
       this.initializeSorting(this.dataSource);
     }
+  }
+
+  /**
+   * Apply the designated filter to the data source
+   *
+   * @param filterValue Filter typed into the filter input
+   */
+  applyFilter(filterValue: string): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   /**
