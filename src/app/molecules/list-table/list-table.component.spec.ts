@@ -1,5 +1,5 @@
 import { Component, SimpleChange, ViewChild } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatSpinner } from '@angular/material/progress-spinner';
@@ -45,24 +45,22 @@ describe('ListTableComponent', (): void => {
   let hostFixture: ComponentFixture<HostForListTableComponent>;
   let listTableComponent: ListTableComponent;
 
-  beforeEach(
-    waitForAsync((): void => {
-      TestBed.configureTestingModule({
-        declarations: [
-          HostForListTableComponent,
-          ListTableComponent,
-          MockComponents(MatSpinner, MatCheckbox),
-          MockDirectives(
-            MatHeaderRowDef,
-            MatRowDef,
-            MatTable,
-            MatFormField,
-            MatLabel,
-          ),
-        ],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async((): void => {
+    TestBed.configureTestingModule({
+      declarations: [
+        HostForListTableComponent,
+        ListTableComponent,
+        MockComponents(MatSpinner, MatCheckbox),
+        MockDirectives(
+          MatHeaderRowDef,
+          MatRowDef,
+          MatTable,
+          MatFormField,
+          MatLabel,
+        ),
+      ],
+    }).compileComponents();
+  }));
 
   beforeEach((): void => {
     hostFixture = TestBed.createComponent(HostForListTableComponent);

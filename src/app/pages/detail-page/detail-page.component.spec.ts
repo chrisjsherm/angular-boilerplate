@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatSpinner } from '@angular/material/progress-spinner';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -38,22 +38,20 @@ describe('DetailPageComponent', (): void => {
   let store: MockStore;
   let dispatchSpy: jasmine.Spy;
 
-  beforeEach(
-    waitForAsync((): void => {
-      TestBed.configureTestingModule({
-        providers: [
-          provideMockStore({ initialState }),
-          {
-            provide: ActivatedRoute,
-            useValue: {
-              params: of({ id: 'db3ee04b-05be-4403-9d48-807fb29717ec' }),
-            },
+  beforeEach(async((): void => {
+    TestBed.configureTestingModule({
+      providers: [
+        provideMockStore({ initialState }),
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 'db3ee04b-05be-4403-9d48-807fb29717ec' }),
           },
-        ],
-        declarations: [DetailPageComponent, MockComponents(MatSpinner)],
-      }).compileComponents();
-    }),
-  );
+        },
+      ],
+      declarations: [DetailPageComponent, MockComponents(MatSpinner)],
+    }).compileComponents();
+  }));
 
   beforeEach((): void => {
     store = TestBed.inject(MockStore);
