@@ -1,0 +1,13 @@
+mat-form-field {
+  display: block;
+  margin-bottom: 20px;
+  max-width: 200px;
+
+  &.url-form-field {
+    max-width: 500px;
+  }
+}
+
+.heading-with-link {
+  margin-bottom: 25px;
+}

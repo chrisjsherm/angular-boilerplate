@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -10,13 +11,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
 /**
  * Export used Angular Material modules so we only need a single import in
  * app.module.ts
  */
 @NgModule({
   exports: [
+    MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatInputModule,
@@ -30,4 +31,4 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatGridListModule,
   ],
 })
-export class AngularMaterialModule {}
+export class AngularMaterialReExportModule {}

@@ -1,17 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatSpinner } from '@angular/material/progress-spinner';
-import { By } from '@angular/platform-browser';
-import { ActivatedRoute, RouterLinkWithHref } from '@angular/router';
+import { FormGroupDirective } from '@angular/forms';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 import { MockComponents, MockDirective } from 'ng-mocks';
 import { BehaviorSubject, of } from 'rxjs';
 import { AppState } from '../../redux/app-state.interface';
-import { DetailPageComponent } from './detail-page.component';
-import { fetchDetailPageData } from './redux/actions/fetch-detail-page-data.actions';
+import { EditPageComponent } from './edit-page.component';
+import { fetchEditPageData } from './redux/actions/fetch-edit-page-data.actions';
 
-describe('DetailPageComponent', (): void => {
+describe('EditPageComponent', (): void => {
   const initialState: AppState = {
     heroes: [
       {
@@ -33,8 +33,8 @@ describe('DetailPageComponent', (): void => {
     ],
   };
 
-  let component: DetailPageComponent;
-  let fixture: ComponentFixture<DetailPageComponent>;
+  let component: EditPageComponent;
+  let fixture: ComponentFixture<EditPageComponent>;
   let store: MockStore;
   let dispatchSpy: jasmine.Spy;
 
@@ -50,9 +50,9 @@ describe('DetailPageComponent', (): void => {
         },
       ],
       declarations: [
-        DetailPageComponent,
-        MockComponents(MatSpinner),
-        MockDirective(RouterLinkWithHref),
+        EditPageComponent,
+        MockComponents(MatFormField, MatLabel),
+        MockDirective(FormGroupDirective),
       ],
     }).compileComponents();
   }));
@@ -60,7 +60,7 @@ describe('DetailPageComponent', (): void => {
   beforeEach((): void => {
     store = TestBed.inject(MockStore);
     dispatchSpy = spyOn(store, 'dispatch');
-    fixture = TestBed.createComponent(DetailPageComponent);
+    fixture = TestBed.createComponent(EditPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -69,9 +69,9 @@ describe('DetailPageComponent', (): void => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch the fetch detail data action', (): void => {
+  it('should dispatch the fetch edit data action', (): void => {
     expect(dispatchSpy).toHaveBeenCalledTimes(1);
-    expect(dispatchSpy).toHaveBeenCalledWith(fetchDetailPageData());
+    expect(dispatchSpy).toHaveBeenCalledWith(fetchEditPageData());
   });
 
   it(
@@ -87,7 +87,7 @@ describe('DetailPageComponent', (): void => {
         params: paramsBehaviorSubject.asObservable(),
       };
       // Set up a new component to avoid polluting other tests
-      component = new DetailPageComponent(
+      component = new EditPageComponent(
         store as Store<AppState>,
         (activatedRoute as unknown) as ActivatedRoute,
       );
@@ -128,13 +128,4 @@ describe('DetailPageComponent', (): void => {
       );
     },
   );
-
-  it('should update the view with the hero matching the route parameter', (): void => {
-    // Arrange
-    const heading: HTMLElement = fixture.debugElement.query(By.css('h1'))
-      .nativeElement;
-
-    // Assert
-    expect(heading.innerText).toEqual('George Washington');
-  });
 });

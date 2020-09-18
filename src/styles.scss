@@ -14,3 +14,18 @@ body {
 table {
   width: 100%;
 }
+
+.heading-with-link {
+  align-self: center;
+  display: flex;
+
+  a,
+  button {
+    margin-left: 25px;
+    align-self: center;
+  }
+
+  h1 {
+    margin-bottom: 0;
+  }
+}

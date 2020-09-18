@@ -1,7 +1,7 @@
 <!-- Using [hidden] instead of *ngIf to allow ViewChildren to have access to DOM -->
 <section [hidden]="hideTableData">
   <mat-form-field>
-    <mat-label i18n>Filter</mat-label>
+    <mat-label i18n>Filter heroes</mat-label>
     <input matInput (keyup)="applyFilter(filterInput.value)" #filterInput />
   </mat-form-field>
 
