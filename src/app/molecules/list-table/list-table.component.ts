@@ -101,7 +101,7 @@ export class ListTableComponent implements AfterViewInit, OnChanges {
   areAllSelected(): boolean {
     const selectedCount = this.selectionModel.selected.length;
     const rowCount = this.dataSource.filteredData.length;
-    return selectedCount === rowCount;
+    return selectedCount > 0 && selectedCount === rowCount;
   }
 
   /**
