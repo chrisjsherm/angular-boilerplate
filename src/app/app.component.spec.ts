@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatIcon } from '@angular/material/icon';
 import { MatNavList } from '@angular/material/list';
 import {
@@ -15,23 +15,25 @@ describe('AppComponent', (): void => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
-  beforeEach(async((): void => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        MockComponents(
-          MatToolbar,
-          MatToolbarRow,
-          MatSidenavContainer,
-          MatSidenav,
-          MatSidenavContent,
-          MatNavList,
-          MatIcon,
-        ),
-      ],
-      imports: [RouterTestingModule],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync((): void => {
+      TestBed.configureTestingModule({
+        declarations: [
+          AppComponent,
+          MockComponents(
+            MatToolbar,
+            MatToolbarRow,
+            MatSidenavContainer,
+            MatSidenav,
+            MatSidenavContent,
+            MatNavList,
+            MatIcon,
+          ),
+        ],
+        imports: [RouterTestingModule],
+      }).compileComponents();
+    }),
+  );
 
   beforeEach((): void => {
     fixture = TestBed.createComponent(AppComponent);
