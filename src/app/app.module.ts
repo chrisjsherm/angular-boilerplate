@@ -16,6 +16,7 @@ import { DetailPageComponent } from './pages/detail-page/detail-page.component';
 import { FetchDetailPageDataEffects } from './pages/detail-page/redux/effects/fetch-detail-page-data.effects';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import { FetchEditPageDataEffects } from './pages/edit-page/redux/effects/fetch-edit-page-data.effects';
+import { SubmitEditFormEffects } from './pages/edit-page/redux/effects/submit-edit-form.effects';
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
 import { reducers } from './redux/reducers/app.action-reducer-map';
@@ -43,6 +44,7 @@ import { reducers } from './redux/reducers/app.action-reducer-map';
       FetchDetailPageDataEffects,
       FetchEditPageDataEffects,
       FetchListPageDataEffects,
+      SubmitEditFormEffects,
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     ReactiveFormsModule,

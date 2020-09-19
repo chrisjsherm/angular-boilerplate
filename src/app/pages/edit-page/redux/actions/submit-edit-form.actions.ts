@@ -4,15 +4,15 @@ import { HeroFormValues } from '../../hero-form-values.interface';
 
 export const submitEditForm = createAction(
   '[EditPageComponent] Submit edit form',
-  props<{ formValues: HeroFormValues }>(),
+  props<{ id: string; formValues: HeroFormValues }>(),
 );
 
 export const submitEditFormSuccess = createAction(
   '[SubmitEditFormEffects] Submit edit form success',
-  props<{ formValues: HeroFormValues }>(),
+  props<{ id: string; formValues: HeroFormValues }>(),
 );
 
 export const submitEditFormFailure = createAction(
   '[SubmitEditFormEffects] Submit edit form failure',
-  props<{ formValues: HeroFormValues; error: HttpErrorResponse }>(),
+  props<{ id: string; formValues: HeroFormValues; error: HttpErrorResponse }>(),
 );

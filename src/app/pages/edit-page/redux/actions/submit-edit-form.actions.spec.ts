@@ -18,7 +18,10 @@ describe('Submit edit form actions', (): void => {
     };
 
     // Act
-    const result = submitEditForm({ formValues: formData });
+    const result = submitEditForm({
+      id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+      formValues: formData,
+    });
 
     // Assert
     expect(result.type).toBe('[EditPageComponent] Submit edit form');
@@ -40,7 +43,10 @@ describe('Submit edit form actions', (): void => {
     };
 
     // Act
-    const result = submitEditFormSuccess({ formValues: formData });
+    const result = submitEditFormSuccess({
+      id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+      formValues: formData,
+    });
 
     // Assert
     expect(result.type).toBe(
@@ -68,7 +74,11 @@ describe('Submit edit form actions', (): void => {
     } as HttpErrorResponse;
 
     // Act
-    const result = submitEditFormFailure({ formValues: formData, error });
+    const result = submitEditFormFailure({
+      id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+      formValues: formData,
+      error,
+    });
 
     // Assert
     expect(result.type).toBe(
