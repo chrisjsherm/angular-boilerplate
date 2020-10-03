@@ -8,6 +8,7 @@ import { Hero } from '../../models/hero.entity';
 import { AppState } from '../../redux/app-state.interface';
 import { selectHeroById } from '../../redux/selectors/hero.selectors';
 import { fetchEditPageData } from './redux/actions/fetch-edit-page-data.actions';
+import { submitEditForm } from './redux/actions/submit-edit-form.actions';
 
 /**
  * A view with form controls for editing a hero
@@ -44,6 +45,23 @@ export class EditPageComponent implements OnInit {
    */
   ngOnInit(): void {
     this.store.dispatch(fetchEditPageData());
+  }
+
+  /**
+   * On form submission, dispatch the submit Action with the form values
+   *
+   * @param id Id of the Hero to edit
+   * @param editForm Angular FormGroup of editable properties
+   */
+  onSubmit(id: string, editForm: FormGroup): void {
+    if (editForm.valid) {
+      this.store.dispatch(
+        submitEditForm({
+          id,
+          formValues: editForm.value,
+        }),
+      );
+    }
   }
 
   /**

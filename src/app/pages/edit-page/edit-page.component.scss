@@ -11,3 +11,7 @@ mat-form-field {
 .heading-with-link {
   margin-bottom: 25px;
 }
+
+button + a {
+  margin-left: 20px;
+}
