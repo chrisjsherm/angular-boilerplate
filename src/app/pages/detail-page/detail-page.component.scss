@@ -9,11 +9,17 @@
   grid-column-start: span 2;
 }
 
-dl {
+.heading-with-link {
+  align-self: center;
   display: flex;
-  flex-flow: row wrap;
+
+  a {
+    margin-left: 25px;
+    align-self: center;
+  }
+
+  h1 {
+    margin-bottom: 0;
+  }
 }
 
-dt {
-  font-weight: 500;
-}
