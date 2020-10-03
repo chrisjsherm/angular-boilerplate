@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import './scss/mat-grid-list.scss';
-@import './scss/mat-toolbar.scss';
+@import './scss/angular-material/mat-toolbar.scss';
 
 html,
 body {
@@ -13,19 +12,4 @@ body {
 
 table {
   width: 100%;
-}
-
-.heading-with-link {
-  align-self: center;
-  display: flex;
-
-  a,
-  button {
-    margin-left: 25px;
-    align-self: center;
-  }
-
-  h1 {
-    margin-bottom: 0;
-  }
 }
