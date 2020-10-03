@@ -1,6 +1,4 @@
-* Upgrade to Angular 10
-
-* Add edit capability
+* Add create ability
 
 * Add user management
-- Service vs. local
+- Service vs. local/custom
