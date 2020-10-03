@@ -1,4 +1,6 @@
-import { Server } from 'miragejs';
+import { Request, Server } from 'miragejs';
+import Schema from 'miragejs/orm/schema';
+import { Hero } from '../../../app/models/hero.entity';
 
 /**
  * Register Heroes routes with MirageJS server
@@ -8,4 +10,21 @@ import { Server } from 'miragejs';
  */
 export function registerHeroesRoutes(server: Server, baseApiUrl: string): void {
   server.get(`${baseApiUrl}`);
+
+  server.patch(
+    `${baseApiUrl}/:id`,
+    (schema: Schema<Partial<Hero>>, request: Request): Hero => {
+      const id = request.params.id;
+      const hero = schema['heros'].find(id);
+      const updatedValues = JSON.parse(request.requestBody);
+
+      for (const property of Object.keys(hero.attrs)) {
+        if (updatedValues.hasOwnProperty(property)) {
+          hero.update(property, updatedValues[property]);
+        }
+      }
+
+      return hero;
+    },
+  );
 }
