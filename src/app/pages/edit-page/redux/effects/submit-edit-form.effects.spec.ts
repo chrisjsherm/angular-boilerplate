@@ -1,11 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { getStatusText, SERVICE_UNAVAILABLE } from 'http-status-codes';
 import { cold, hot } from 'jasmine-marbles';
+import { MockProvider } from 'ng-mocks';
 import { Observable, of, throwError } from 'rxjs';
 import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
+import { ListPageComponent } from '../../../list-page/list-page.component';
 import {
   submitEditForm,
   submitEditFormFailure,
@@ -17,9 +22,15 @@ describe('Submit edit form side effects', (): void => {
   let actions$: Observable<Action>;
   let effects: SubmitEditFormEffects;
   let heroesHttpService: jasmine.SpyObj<HeroesHttpService>;
+  let router: Router;
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'heroes', component: ListPageComponent },
+        ]),
+      ],
       providers: [
         SubmitEditFormEffects,
         provideMockActions((): Observable<Action> => actions$),
@@ -29,6 +40,7 @@ describe('Submit edit form side effects', (): void => {
             update: jasmine.createSpy(),
           },
         },
+        MockProvider(MatSnackBar),
       ],
     });
 
@@ -36,6 +48,7 @@ describe('Submit edit form side effects', (): void => {
     heroesHttpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
       HeroesHttpService
     >;
+    router = TestBed.inject(Router);
   });
 
   it('should be created', (): void => {
@@ -45,6 +58,7 @@ describe('Submit edit form side effects', (): void => {
   it('should trigger a call to update a hero and issue a success Action', (): void => {
     // Arrange
     heroesHttpService.update.and.returnValue(of(undefined));
+    const routerSpy = spyOn(router, 'navigate');
 
     // Act
     actions$ = hot('-a', {
@@ -73,6 +87,8 @@ describe('Submit edit form side effects', (): void => {
         }),
       }),
     );
+    expect(routerSpy).toHaveBeenCalledTimes(1);
+    expect(routerSpy).toHaveBeenCalledWith(['/heroes']);
   });
 
   it(
@@ -89,6 +105,7 @@ describe('Submit edit form side effects', (): void => {
         ),
         of(undefined),
       );
+      const routerSpy = spyOn(router, 'navigate');
 
       // Act
       actions$ = hot('-a--b', {
@@ -140,6 +157,8 @@ describe('Submit edit form side effects', (): void => {
           }),
         }),
       );
+      expect(routerSpy).toHaveBeenCalledTimes(1);
+      expect(routerSpy).toHaveBeenCalledWith(['/heroes']);
     },
   );
 });

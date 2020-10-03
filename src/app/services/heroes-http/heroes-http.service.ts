@@ -46,7 +46,7 @@ export class HeroesHttpService {
    *
    * @returns Empty Observable indicating the completion of the HTTP request
    */
-  update(id: string, formValues: HeroFormValues): Observable<void> {
+  update(id: string, formValues: Partial<HeroFormValues>): Observable<void> {
     return this.baseUrl$.pipe(
       exhaustMap(
         (baseUrl: string): Observable<void> => {
