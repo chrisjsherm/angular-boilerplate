@@ -11,8 +11,10 @@ import { environment } from '../environments/environment';
 import { AngularMaterialReExportModule } from './angular-material/angular-material-re-export.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SnackbarFailureComponent } from './atoms/snackbar-failure/snackbar-failure.component';
 import { SnackbarSuccessComponent } from './atoms/snackbar-success/snackbar-success.component';
 import { ListTableComponent } from './molecules/list-table/list-table.component';
+import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { DetailPageComponent } from './pages/detail-page/detail-page.component';
 import { FetchDetailPageDataEffects } from './pages/detail-page/redux/effects/fetch-detail-page-data.effects';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
@@ -21,7 +23,6 @@ import { SubmitEditFormEffects } from './pages/edit-page/redux/effects/submit-ed
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
 import { reducers } from './redux/reducers/app.action-reducer-map';
-import { SnackbarFailureComponent } from './atoms/snackbar-failure/snackbar-failure.component';
 
 /**
  * Base module for the entire application
@@ -35,6 +36,7 @@ import { SnackbarFailureComponent } from './atoms/snackbar-failure/snackbar-fail
     EditPageComponent,
     SnackbarSuccessComponent,
     SnackbarFailureComponent,
+    CreatePageComponent,
   ],
   imports: [
     BrowserModule,
