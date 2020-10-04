@@ -2,13 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { getStatusText, SERVICE_UNAVAILABLE } from 'http-status-codes';
 import { HeroFormValues } from '../../../../models/hero-form-values.interface';
 import {
-  submitEditForm,
-  submitEditFormFailure,
-  submitEditFormSuccess,
-} from './submit-edit-form.actions';
+  submitCreateForm,
+  submitCreateFormFailure,
+  submitCreateFormSuccess,
+} from './submit-create-form.actions';
 
-describe('Submit edit form actions', (): void => {
-  it('should issue a submit edit form action', (): void => {
+describe('Submit create form actions', (): void => {
+  it('should issue a submit create form action', (): void => {
     // Arrange
     const formData: HeroFormValues = {
       firstName: 'G.',
@@ -18,13 +18,12 @@ describe('Submit edit form actions', (): void => {
     };
 
     // Act
-    const result = submitEditForm({
-      id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+    const result = submitCreateForm({
       formValues: formData,
     });
 
     // Assert
-    expect(result.type).toBe('[EditPageComponent] Submit edit form');
+    expect(result.type).toBe('[CreatePageComponent] Submit create form');
     expect(result.formValues).toEqual({
       firstName: 'G.',
       lastName: 'Washington',
@@ -33,7 +32,7 @@ describe('Submit edit form actions', (): void => {
     });
   });
 
-  it('should issue a submit edit form success action', (): void => {
+  it('should issue a submit create form success action', (): void => {
     // Arrange
     const formData: HeroFormValues = {
       firstName: 'G.',
@@ -43,14 +42,13 @@ describe('Submit edit form actions', (): void => {
     };
 
     // Act
-    const result = submitEditFormSuccess({
-      id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+    const result = submitCreateFormSuccess({
       formValues: formData,
     });
 
     // Assert
     expect(result.type).toBe(
-      '[SubmitEditFormEffects] Submit edit form success',
+      '[SubmitCreateFormEffects] Submit create form success',
     );
     expect(result.formValues).toEqual({
       firstName: 'G.',
@@ -60,7 +58,7 @@ describe('Submit edit form actions', (): void => {
     });
   });
 
-  it('should issue a submit edit form success action', (): void => {
+  it('should issue a submit create form success action', (): void => {
     // Arrange
     const formData: HeroFormValues = {
       firstName: 'G.',
@@ -74,15 +72,14 @@ describe('Submit edit form actions', (): void => {
     } as HttpErrorResponse;
 
     // Act
-    const result = submitEditFormFailure({
-      id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+    const result = submitCreateFormFailure({
       formValues: formData,
       error,
     });
 
     // Assert
     expect(result.type).toBe(
-      '[SubmitEditFormEffects] Submit edit form failure',
+      '[SubmitCreateFormEffects] Submit create form failure',
     );
     expect(result.formValues).toEqual({
       firstName: 'G.',
