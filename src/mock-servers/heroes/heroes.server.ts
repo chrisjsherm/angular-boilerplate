@@ -1,5 +1,6 @@
-import { Server, Model, RestSerializer } from 'miragejs';
 import { random } from 'faker';
+import { inflections } from 'inflected';
+import { Model, RestSerializer, Server } from 'miragejs';
 import { factory as heroFactory } from './factories/hero.factory';
 import { registerConfigurationRoutes } from './routes/configurations.routes';
 import { registerHeroesRoutes } from './routes/heroes.routes';
@@ -21,6 +22,16 @@ export function makeServer(
     environment: 'test',
   },
 ): Server {
+  // Customize how MirageJS pluralizes words
+  inflections(
+    'en',
+    (inflect: {
+      irregular: (model: string, pluralized: string) => void;
+    }): void => {
+      inflect.irregular('hero', 'heroes');
+    },
+  );
+
   return new Server({
     environment: configuration.environment,
 

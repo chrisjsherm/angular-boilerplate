@@ -15,7 +15,7 @@ export function registerHeroesRoutes(server: Server, baseApiUrl: string): void {
     `${baseApiUrl}/:id`,
     (schema: Schema<Partial<Hero>>, request: Request): Hero => {
       const id = request.params.id;
-      const hero = schema['heros'].find(id);
+      const hero = schema['heroes'].find(id);
       const updatedValues = JSON.parse(request.requestBody);
 
       for (const property of Object.keys(hero.attrs)) {
@@ -25,6 +25,15 @@ export function registerHeroesRoutes(server: Server, baseApiUrl: string): void {
       }
 
       return hero;
+    },
+  );
+
+  server.post(
+    `${baseApiUrl}`,
+    (schema: Schema<Partial<Hero>>, request: Request): Hero => {
+      const hero: Hero = JSON.parse(request.requestBody);
+
+      return schema['heroes'].create(hero);
     },
   );
 }

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
@@ -11,16 +11,18 @@ describe('CreatePageComponent', (): void => {
   let store: MockStore;
   let dispatchSpy: jasmine.Spy;
 
-  beforeEach(async((): void => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      providers: [provideMockStore({})],
-      declarations: [
-        CreatePageComponent,
-        MockComponents(MatFormField, MatLabel, MatError),
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync((): void => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule],
+        providers: [provideMockStore({})],
+        declarations: [
+          CreatePageComponent,
+          MockComponents(MatFormField, MatLabel, MatError),
+        ],
+      }).compileComponents();
+    }),
+  );
 
   beforeEach((): void => {
     store = TestBed.inject(MockStore);

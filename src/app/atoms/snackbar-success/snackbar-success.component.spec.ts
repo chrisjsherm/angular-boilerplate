@@ -1,15 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { SnackbarSuccessComponent } from './snackbar-success.component';
 
 describe('SnackbarSuccessComponent', (): void => {
   let component: SnackbarSuccessComponent;
   let fixture: ComponentFixture<SnackbarSuccessComponent>;
 
-  beforeEach(async((): void => {
-    TestBed.configureTestingModule({
-      declarations: [SnackbarSuccessComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync((): void => {
+      TestBed.configureTestingModule({
+        declarations: [SnackbarSuccessComponent],
+      }).compileComponents();
+    }),
+  );
 
   beforeEach((): void => {
     fixture = TestBed.createComponent(SnackbarSuccessComponent);

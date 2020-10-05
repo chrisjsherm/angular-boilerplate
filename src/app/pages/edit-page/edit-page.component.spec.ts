@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { By } from '@angular/platform-browser';
@@ -39,25 +39,27 @@ describe('EditPageComponent', (): void => {
   let store: MockStore;
   let dispatchSpy: jasmine.Spy;
 
-  beforeEach(async((): void => {
-    TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      providers: [
-        provideMockStore({ initialState }),
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({ id: 'db3ee04b-05be-4403-9d48-807fb29717ec' }),
+  beforeEach(
+    waitForAsync((): void => {
+      TestBed.configureTestingModule({
+        imports: [ReactiveFormsModule],
+        providers: [
+          provideMockStore({ initialState }),
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              params: of({ id: 'db3ee04b-05be-4403-9d48-807fb29717ec' }),
+            },
           },
-        },
-      ],
-      declarations: [
-        EditPageComponent,
-        MockComponents(MatFormField, MatLabel, MatError),
-        MockDirectives(RouterLinkWithHref),
-      ],
-    }).compileComponents();
-  }));
+        ],
+        declarations: [
+          EditPageComponent,
+          MockComponents(MatFormField, MatLabel, MatError),
+          MockDirectives(RouterLinkWithHref),
+        ],
+      }).compileComponents();
+    }),
+  );
 
   beforeEach((): void => {
     store = TestBed.inject(MockStore);

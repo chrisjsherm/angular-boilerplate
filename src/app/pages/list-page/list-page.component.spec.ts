@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
@@ -12,22 +12,24 @@ describe('ListPageComponent', (): void => {
   let fixture: ComponentFixture<ListPageComponent>;
   let store: jasmine.SpyObj<Store<AppState>>;
 
-  beforeEach(async((): void => {
-    TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: Store,
-          useValue: jasmine.createSpyObj<Store<AppState>>('store', [
-            'dispatch',
-            'pipe',
-          ]),
-        },
-      ],
-      declarations: [ListPageComponent, MockComponent(ListTableComponent)],
-    }).compileComponents();
+  beforeEach(
+    waitForAsync((): void => {
+      TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: Store,
+            useValue: jasmine.createSpyObj<Store<AppState>>('store', [
+              'dispatch',
+              'pipe',
+            ]),
+          },
+        ],
+        declarations: [ListPageComponent, MockComponent(ListTableComponent)],
+      }).compileComponents();
 
-    store = TestBed.inject(Store) as jasmine.SpyObj<Store<AppState>>;
-  }));
+      store = TestBed.inject(Store) as jasmine.SpyObj<Store<AppState>>;
+    }),
+  );
 
   beforeEach((): void => {
     store.pipe.and.returnValue(of([]));
