@@ -35,6 +35,28 @@ describe('HeroesHttpService', (): void => {
     expect(service).toBeTruthy();
   });
 
+  it('should create a hero', (): void => {
+    // Act
+    service.create({
+      firstName: 'Thomas',
+      lastName: 'Jefferson',
+      phoneNumber: '(703) 555-5555',
+      avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
+    });
+
+    // Assert
+    const testRequest = httpTestingController.expectOne(
+      'http://192.1.1.1:8282/api/v1/heroes',
+    );
+    expect(testRequest.request.method).toBe('POST');
+    expect(testRequest.request.body).toEqual({
+      firstName: 'Thomas',
+      lastName: 'Jefferson',
+      phoneNumber: '(703) 555-5555',
+      avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
+    });
+  });
+
   it('should read Heroes', (): void => {
     // Act
     service.read().subscribe();

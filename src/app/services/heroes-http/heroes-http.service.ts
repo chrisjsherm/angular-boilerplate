@@ -25,6 +25,23 @@ export class HeroesHttpService {
   }
 
   /**
+   * Create a new Hero
+   *
+   * @param heroForm Fields to create a Hero
+   *
+   * @returns Created Hero
+   */
+  create(heroForm: HeroFormValues): Observable<Hero> {
+    return this.baseUrl$.pipe(
+      exhaustMap(
+        (baseUrl: string): Observable<Hero> => {
+          return this.httpClient.post<Hero>(baseUrl, heroForm);
+        },
+      ),
+    );
+  }
+
+  /**
    * Get a list of Heroes
    *
    * @returns List of Heroes
