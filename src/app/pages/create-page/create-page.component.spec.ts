@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { MockComponents } from 'ng-mocks';
 import { CreatePageComponent } from './create-page.component';
 
 describe('CreatePageComponent', (): void => {
@@ -10,8 +13,12 @@ describe('CreatePageComponent', (): void => {
 
   beforeEach(async((): void => {
     TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
       providers: [provideMockStore({})],
-      declarations: [CreatePageComponent],
+      declarations: [
+        CreatePageComponent,
+        MockComponents(MatFormField, MatLabel, MatError),
+      ],
     }).compileComponents();
   }));
 

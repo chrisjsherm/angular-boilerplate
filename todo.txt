@@ -1,4 +1,6 @@
 * Add create ability
 
+* Consolidate form styles from create and edit pages
+
 * Add user management
 - Service vs. local/custom

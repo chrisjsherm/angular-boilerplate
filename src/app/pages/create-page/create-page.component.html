@@ -1,1 +1,47 @@
-<p>create-page works!</p>
+<div>
+  <h1>
+    Create hero
+  </h1>
+</div>
+
+<form [formGroup]="createForm" (ngSubmit)="onSubmit(createForm)">
+  <mat-form-field>
+    <mat-label>First name</mat-label>
+    <input matInput formControlName="firstName" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Last name</mat-label>
+    <input matInput formControlName="lastName" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Phone number</mat-label>
+    <input matInput formControlName="phoneNumber" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="url-form-field">
+    <mat-label>Avatar URL</mat-label>
+    <input matInput formControlName="avatarUrl" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+
+  <div>
+    <button
+      [disabled]="createForm.invalid"
+      type="submit"
+      color="primary"
+      mat-raised-button
+      i18n
+    >
+      Create
+    </button>
+
+    <a mat-raised-button routerLink="/heroes" i18n>
+      Cancel
+    </a>
+  </div>
+</form>
