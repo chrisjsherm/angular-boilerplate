@@ -15,6 +15,7 @@ import { SnackbarFailureComponent } from './atoms/snackbar-failure/snackbar-fail
 import { SnackbarSuccessComponent } from './atoms/snackbar-success/snackbar-success.component';
 import { ListTableComponent } from './molecules/list-table/list-table.component';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
+import { SubmitCreateFormEffects } from './pages/create-page/redux/effects/submit-create-form.effects';
 import { DetailPageComponent } from './pages/detail-page/detail-page.component';
 import { FetchDetailPageDataEffects } from './pages/detail-page/redux/effects/fetch-detail-page-data.effects';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
@@ -50,6 +51,7 @@ import { reducers } from './redux/reducers/app.action-reducer-map';
       FetchDetailPageDataEffects,
       FetchEditPageDataEffects,
       FetchListPageDataEffects,
+      SubmitCreateFormEffects,
       SubmitEditFormEffects,
     ]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

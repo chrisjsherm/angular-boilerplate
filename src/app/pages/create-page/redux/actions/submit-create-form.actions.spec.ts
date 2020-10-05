@@ -43,18 +43,27 @@ describe('Submit create form actions', (): void => {
 
     // Act
     const result = submitCreateFormSuccess({
-      formValues: formData,
+      hero: {
+        id: '1',
+        firstName: 'G.',
+        lastName: 'Washington',
+        phoneNumber: '(703) 111-1111',
+        avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
+        fullName: 'G. Washington',
+      },
     });
 
     // Assert
     expect(result.type).toBe(
       '[SubmitCreateFormEffects] Submit create form success',
     );
-    expect(result.formValues).toEqual({
+    expect(result.hero).toEqual({
+      id: '1',
       firstName: 'G.',
       lastName: 'Washington',
       phoneNumber: '(703) 111-1111',
       avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
+      fullName: 'G. Washington',
     });
   });
 

@@ -16,7 +16,7 @@ import {
 } from '../actions/submit-edit-form.actions';
 
 /**
- * Side effects arising from the Action for submitting edit page page
+ * Side effects arising from the Action for submitting edit form
  */
 @Injectable()
 export class SubmitEditFormEffects {

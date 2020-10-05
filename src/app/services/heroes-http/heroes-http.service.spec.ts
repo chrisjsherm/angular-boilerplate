@@ -37,12 +37,14 @@ describe('HeroesHttpService', (): void => {
 
   it('should create a hero', (): void => {
     // Act
-    service.create({
-      firstName: 'Thomas',
-      lastName: 'Jefferson',
-      phoneNumber: '(703) 555-5555',
-      avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
-    });
+    service
+      .create({
+        firstName: 'Thomas',
+        lastName: 'Jefferson',
+        phoneNumber: '(703) 555-5555',
+        avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
+      })
+      .subscribe();
 
     // Assert
     const testRequest = httpTestingController.expectOne(

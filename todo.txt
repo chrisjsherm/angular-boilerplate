@@ -2,5 +2,7 @@
 
 * Consolidate form styles from create and edit pages
 
+* Add Redux routing
+
 * Add user management
 - Service vs. local/custom
