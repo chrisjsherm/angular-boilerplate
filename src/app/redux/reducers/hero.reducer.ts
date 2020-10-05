@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { Hero } from '../../models/hero.entity';
+import { submitCreateFormSuccess } from '../../pages/create-page/redux/actions/submit-create-form.actions';
 import { fetchDetailPageDataSuccess } from '../../pages/detail-page/redux/actions/fetch-detail-page-data.actions';
 import { fetchEditPageDataSuccess } from '../../pages/edit-page/redux/actions/fetch-edit-page-data.actions';
 import { submitEditFormSuccess } from '../../pages/edit-page/redux/actions/submit-edit-form.actions';
@@ -18,6 +19,16 @@ export const reducer = createReducer(
       action: ReturnType<typeof fetchListPageDataSuccess>,
     ): Hero[] => {
       return action.heroes;
+    },
+  ),
+
+  on(
+    submitCreateFormSuccess,
+    (
+      state: Hero[],
+      action: ReturnType<typeof submitCreateFormSuccess>,
+    ): Hero[] => {
+      return [action.hero, ...state];
     },
   ),
 
