@@ -7,8 +7,9 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { getStatusText, SERVICE_UNAVAILABLE } from 'http-status-codes';
 import { cold, hot } from 'jasmine-marbles';
-import { MockProvider } from 'ng-mocks';
 import { Observable, of, throwError } from 'rxjs';
+import { SnackbarSuccessComponent } from '../../../../atoms/snackbar-success/snackbar-success.component';
+import { SnackbarSourceEvent } from '../../../../models/snackbar-source.enum';
 import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
 import { ListPageComponent } from '../../../list-page/list-page.component';
 import {
@@ -23,6 +24,7 @@ describe('Submit edit form side effects', (): void => {
   let effects: SubmitEditFormEffects;
   let heroesHttpService: jasmine.SpyObj<HeroesHttpService>;
   let router: Router;
+  let snackbarService: MatSnackBar;
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
@@ -40,7 +42,12 @@ describe('Submit edit form side effects', (): void => {
             update: jasmine.createSpy(),
           },
         },
-        MockProvider(MatSnackBar),
+        {
+          provide: MatSnackBar,
+          useValue: {
+            openFromComponent: jasmine.createSpy(),
+          },
+        },
       ],
     });
 
@@ -49,6 +56,7 @@ describe('Submit edit form side effects', (): void => {
       HeroesHttpService
     >;
     router = TestBed.inject(Router);
+    snackbarService = TestBed.inject(MatSnackBar);
   });
 
   it('should be created', (): void => {
@@ -89,6 +97,13 @@ describe('Submit edit form side effects', (): void => {
     );
     expect(routerSpy).toHaveBeenCalledTimes(1);
     expect(routerSpy).toHaveBeenCalledWith(['/heroes']);
+    expect(snackbarService.openFromComponent).toHaveBeenCalledTimes(1);
+    expect(snackbarService.openFromComponent).toHaveBeenCalledWith(
+      SnackbarSuccessComponent,
+      {
+        data: SnackbarSourceEvent.Update,
+      },
+    );
   });
 
   it(
@@ -159,6 +174,28 @@ describe('Submit edit form side effects', (): void => {
       );
       expect(routerSpy).toHaveBeenCalledTimes(1);
       expect(routerSpy).toHaveBeenCalledWith(['/heroes']);
+
+      expect(snackbarService.openFromComponent).toHaveBeenCalledTimes(2);
+
+      const firstSnackbarCallArguments = (snackbarService.openFromComponent as jasmine.Spy).calls.argsFor(
+        0,
+      );
+      expect(firstSnackbarCallArguments[0].name).toBe(
+        'SnackbarFailureComponent',
+      );
+      expect(firstSnackbarCallArguments[1].data).toEqual(
+        SnackbarSourceEvent.Update,
+      );
+
+      const secondSnackbarCallArguments = (snackbarService.openFromComponent as jasmine.Spy).calls.argsFor(
+        1,
+      );
+      expect(secondSnackbarCallArguments[0].name).toBe(
+        'SnackbarSuccessComponent',
+      );
+      expect(secondSnackbarCallArguments[1].data).toEqual(
+        SnackbarSourceEvent.Update,
+      );
     },
   );
 });

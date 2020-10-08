@@ -1,1 +1,9 @@
-<p>snackbar-failure works!</p>
+<ng-container [ngSwitch]="snackbarSource">
+  <span i18n *ngSwitchCase="SnackbarSource.Create">
+    Create failed
+  </span>
+
+  <span *ngSwitchCase="SnackbarSource.Update">
+    Update failed
+  </span>
+</ng-container>

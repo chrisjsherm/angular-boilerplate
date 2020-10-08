@@ -9,6 +9,7 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { SnackbarFailureComponent } from '../../../../atoms/snackbar-failure/snackbar-failure.component';
 import { SnackbarSuccessComponent } from '../../../../atoms/snackbar-success/snackbar-success.component';
 import { Hero } from '../../../../models/hero.entity';
+import { SnackbarSourceEvent } from '../../../../models/snackbar-source.enum';
 import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
 import {
   submitCreateForm,
@@ -43,6 +44,9 @@ export class SubmitCreateFormEffects {
               tap((): void => {
                 this.snackbarService.openFromComponent(
                   SnackbarSuccessComponent,
+                  {
+                    data: SnackbarSourceEvent.Create,
+                  },
                 );
                 this.router.navigate(['/heroes']);
               }),
@@ -50,6 +54,9 @@ export class SubmitCreateFormEffects {
                 (error: HttpErrorResponse): Observable<Action> => {
                   this.snackbarService.openFromComponent(
                     SnackbarFailureComponent,
+                    {
+                      data: SnackbarSourceEvent.Create,
+                    },
                   );
                   return of(
                     submitCreateFormFailure({

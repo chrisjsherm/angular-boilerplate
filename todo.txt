@@ -1,6 +1,6 @@
-* Add create ability
-
 * Consolidate form styles from create and edit pages
+
+* Fix scrolling/pagination on the list table
 
 * Add Redux routing
 

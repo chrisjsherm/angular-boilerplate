@@ -8,6 +8,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { SnackbarFailureComponent } from '../../../../atoms/snackbar-failure/snackbar-failure.component';
 import { SnackbarSuccessComponent } from '../../../../atoms/snackbar-success/snackbar-success.component';
+import { SnackbarSourceEvent } from '../../../../models/snackbar-source.enum';
 import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
 import {
   submitEditForm,
@@ -47,6 +48,9 @@ export class SubmitEditFormEffects {
                 tap((): void => {
                   this.snackbarService.openFromComponent(
                     SnackbarSuccessComponent,
+                    {
+                      data: SnackbarSourceEvent.Update,
+                    },
                   );
                   this.router.navigate(['/heroes']);
                 }),
@@ -54,6 +58,9 @@ export class SubmitEditFormEffects {
                   (error: HttpErrorResponse): Observable<Action> => {
                     this.snackbarService.openFromComponent(
                       SnackbarFailureComponent,
+                      {
+                        data: SnackbarSourceEvent.Update,
+                      },
                     );
                     return of(
                       submitEditFormFailure({

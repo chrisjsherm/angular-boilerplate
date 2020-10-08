@@ -1,3 +1,9 @@
-<span i18n>
-  Update successful
-</span>
+<ng-container [ngSwitch]="snackbarSource">
+  <span i18n *ngSwitchCase="SnackbarSource.Create">
+    Create successful
+  </span>
+
+  <span *ngSwitchCase="SnackbarSource.Update">
+    Update successful
+  </span>
+</ng-container>

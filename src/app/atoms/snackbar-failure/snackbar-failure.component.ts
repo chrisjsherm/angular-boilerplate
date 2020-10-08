@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { SnackbarSourceEvent } from '../../models/snackbar-source.enum';
 
 /**
  * Snackbar message displayed when unsuccessfully acting upon a Hero
@@ -9,5 +11,9 @@ import { Component } from '@angular/core';
   styleUrls: [],
 })
 export class SnackbarFailureComponent {
-  constructor() {}
+  readonly SnackbarSource = SnackbarSourceEvent;
+
+  constructor(
+    @Inject(MAT_SNACK_BAR_DATA) public snackbarSource: SnackbarSourceEvent,
+  ) {}
 }
