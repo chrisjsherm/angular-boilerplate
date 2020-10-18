@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {
-  ErrorStateMatcher,
-  ShowOnDirtyErrorStateMatcher,
-} from '@angular/material/core';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +16,7 @@ import {
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CustomErrorStateMatcher } from './custom.error-state-matcher';
 /**
  * Export used Angular Material modules so we only need a single import in
  * app.module.ts
@@ -40,7 +38,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatGridListModule,
   ],
   providers: [
-    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    { provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher },
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 10500 } },
   ],
 })
