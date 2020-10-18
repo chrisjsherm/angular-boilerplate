@@ -1,0 +1,25 @@
+<ng-container [formGroup]="formGroup">
+  <mat-form-field>
+    <mat-label>First name</mat-label>
+    <input matInput formControlName="firstName" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Last name</mat-label>
+    <input matInput formControlName="lastName" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Phone number</mat-label>
+    <input matInput formControlName="phoneNumber" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="url-form-field">
+    <mat-label>Avatar URL</mat-label>
+    <input matInput formControlName="avatarUrl" />
+    <mat-error i18n>This field is required</mat-error>
+  </mat-form-field>
+</ng-container>
