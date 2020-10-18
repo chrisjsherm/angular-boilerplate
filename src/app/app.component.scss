@@ -7,10 +7,11 @@
   text-decoration: none;
 }
 
-mat-sidenav-container {
-  height: 100%;
+mat-sidenav {
+  max-width: 18.75rem; // 300px
+  min-width: 12.5rem; // 200px
 }
 
 mat-sidenav-content {
-  margin: 32px;
+  padding: 3rem;
 }

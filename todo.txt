@@ -1,5 +1,3 @@
-* Fix scrolling/pagination on the list table
-
 * Add Redux routing
 
 * Add user management
