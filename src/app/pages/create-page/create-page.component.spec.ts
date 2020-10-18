@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { MockComponents } from 'ng-mocks';
+import { HeroFormComponent } from '../../organisms/hero-form/hero-form.component';
 import { CreatePageComponent } from './create-page.component';
 
 describe('CreatePageComponent', (): void => {
@@ -18,6 +19,7 @@ describe('CreatePageComponent', (): void => {
         providers: [provideMockStore({})],
         declarations: [
           CreatePageComponent,
+          HeroFormComponent,
           MockComponents(MatFormField, MatLabel, MatError),
         ],
       }).compileComponents();
@@ -47,10 +49,12 @@ describe('CreatePageComponent', (): void => {
       (): void => {
         // Arrange
         component.createForm.setValue({
-          avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
-          firstName: 'George',
-          lastName: 'Washington',
-          phoneNumber: '(703) 111-1111',
+          hero: {
+            avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
+            firstName: 'George',
+            lastName: 'Washington',
+            phoneNumber: '(703) 111-1111',
+          },
         });
 
         // Assert
@@ -67,10 +71,12 @@ describe('CreatePageComponent', (): void => {
     it('Should not dispatch the submit create form Action when the form is invalid', (): void => {
       // Arrange
       component.createForm.setValue({
-        avatarUrl: '',
-        firstName: 'George',
-        lastName: 'Washington',
-        phoneNumber: '(703) 111-1111',
+        hero: {
+          avatarUrl: '',
+          firstName: 'George',
+          lastName: 'Washington',
+          phoneNumber: '(703) 111-1111',
+        },
       });
 
       // Assert

@@ -24,6 +24,7 @@ import { SubmitEditFormEffects } from './pages/edit-page/redux/effects/submit-ed
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
 import { reducers } from './redux/reducers/app.action-reducer-map';
+import { HeroFormComponent } from './organisms/hero-form/hero-form.component';
 
 /**
  * Base module for the entire application
@@ -38,6 +39,7 @@ import { reducers } from './redux/reducers/app.action-reducer-map';
     SnackbarSuccessComponent,
     SnackbarFailureComponent,
     CreatePageComponent,
+    HeroFormComponent,
   ],
   imports: [
     BrowserModule,

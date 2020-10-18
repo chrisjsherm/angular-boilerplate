@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -22,7 +22,11 @@ export class EditPageComponent implements OnInit {
   hero$: Observable<Hero>;
   editForm: FormGroup;
 
-  constructor(private store: Store<AppState>, private route: ActivatedRoute) {
+  constructor(
+    private store: Store<AppState>,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+  ) {
     this.hero$ = this.route.params.pipe(
       switchMap(
         (params: Params): Observable<Hero> => {
@@ -58,7 +62,7 @@ export class EditPageComponent implements OnInit {
       this.store.dispatch(
         submitEditForm({
           id,
-          formValues: editForm.value,
+          formValues: editForm.get('hero').value,
         }),
       );
     }
@@ -72,11 +76,16 @@ export class EditPageComponent implements OnInit {
    * @returns Angular FormGroup we'll interact with in the HTML template
    */
   private generateFormInstance(hero: Hero): FormGroup {
-    return new FormGroup({
-      firstName: new FormControl(hero.firstName, [Validators.required]),
-      lastName: new FormControl(hero.lastName, [Validators.required]),
-      phoneNumber: new FormControl(hero.phoneNumber, [Validators.required]),
-      avatarUrl: new FormControl(hero.avatarUrl, [Validators.required]),
+    const { firstName, lastName, phoneNumber, avatarUrl } = hero;
+    return this.formBuilder.group({
+      hero: [
+        {
+          firstName,
+          lastName,
+          phoneNumber,
+          avatarUrl,
+        },
+      ],
     });
   }
 }

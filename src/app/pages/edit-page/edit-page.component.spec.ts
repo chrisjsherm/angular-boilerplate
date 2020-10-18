@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroupDirective,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLinkWithHref } from '@angular/router';
@@ -8,6 +12,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 import { MockComponents, MockDirectives } from 'ng-mocks';
 import { BehaviorSubject, of } from 'rxjs';
+import { HeroFormComponent } from '../../organisms/hero-form/hero-form.component';
 import { AppState } from '../../redux/app-state.interface';
 import { EditPageComponent } from './edit-page.component';
 import { fetchEditPageData } from './redux/actions/fetch-edit-page-data.actions';
@@ -51,9 +56,11 @@ describe('EditPageComponent', (): void => {
               params: of({ id: 'db3ee04b-05be-4403-9d48-807fb29717ec' }),
             },
           },
+          FormBuilder,
         ],
         declarations: [
           EditPageComponent,
+          HeroFormComponent,
           MockComponents(MatFormField, MatLabel, MatError),
           MockDirectives(RouterLinkWithHref),
         ],
@@ -95,6 +102,7 @@ describe('EditPageComponent', (): void => {
         component = new EditPageComponent(
           store as Store<AppState>,
           (activatedRoute as unknown) as ActivatedRoute,
+          TestBed.inject(FormBuilder),
         );
 
         // Assert
@@ -178,7 +186,7 @@ describe('EditPageComponent', (): void => {
         'a valid form',
       (): void => {
         // Assert
-        expect(component.editForm.value).toEqual({
+        expect(component.editForm.get('hero').value).toEqual({
           avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
           firstName: 'George',
           lastName: 'Washington',
@@ -199,10 +207,15 @@ describe('EditPageComponent', (): void => {
 
     it('Should not dispatch the submit Action when the form is invalid', (): void => {
       // Arrange
-      component.editForm.get('avatarUrl').setValue('');
+      component.editForm.get('hero').setValue({
+        avatarUrl: '',
+        firstName: 'George',
+        lastName: 'Washington',
+        phoneNumber: '(703) 111-1111',
+      });
 
       // Assert
-      expect(component.editForm.value).toEqual({
+      expect(component.editForm.get('hero').value).toEqual({
         avatarUrl: '',
         firstName: 'George',
         lastName: 'Washington',

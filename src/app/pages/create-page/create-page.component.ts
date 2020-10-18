@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../redux/app-state.interface';
 import { submitCreateForm } from './redux/actions/submit-create-form.actions';
@@ -15,7 +15,10 @@ import { submitCreateForm } from './redux/actions/submit-create-form.actions';
 export class CreatePageComponent {
   createForm: FormGroup;
 
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private formBuilder: FormBuilder,
+  ) {
     this.createForm = this.generateFormInstance();
   }
 
@@ -28,7 +31,7 @@ export class CreatePageComponent {
     if (createForm.valid) {
       this.store.dispatch(
         submitCreateForm({
-          formValues: createForm.value,
+          formValues: createForm.get('hero').value,
         }),
       );
     }
@@ -38,11 +41,8 @@ export class CreatePageComponent {
    * Generate a form group with controls for creating a new Hero
    */
   private generateFormInstance(): FormGroup {
-    return new FormGroup({
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required]),
-      avatarUrl: new FormControl('', [Validators.required]),
+    return this.formBuilder.group({
+      hero: [],
     });
   }
 }
