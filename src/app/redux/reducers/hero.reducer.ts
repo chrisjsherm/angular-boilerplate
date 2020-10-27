@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { submitDeleteHeroSuccess } from '../../dialogs/delete-hero-dialog/redux/delete-hero-dialog.actions';
 import { Hero } from '../../models/hero.entity';
 import { submitCreateFormSuccess } from '../../pages/create-page/redux/actions/submit-create-form.actions';
 import { fetchDetailPageDataSuccess } from '../../pages/detail-page/redux/actions/fetch-detail-page-data.actions';
@@ -10,6 +11,22 @@ export const initialState: Hero[] = undefined;
 
 export const reducer = createReducer(
   initialState,
+
+  on(
+    submitDeleteHeroSuccess,
+    (
+      state: Hero[],
+      action: ReturnType<typeof submitDeleteHeroSuccess>,
+    ): Hero[] => {
+      return state.reduce((result: Hero[], hero: Hero): Hero[] => {
+        if (hero.id !== action.hero.id) {
+          result.push(hero);
+        }
+        return result;
+      }, []);
+    },
+  ),
+
   on(
     fetchDetailPageDataSuccess,
     fetchEditPageDataSuccess,

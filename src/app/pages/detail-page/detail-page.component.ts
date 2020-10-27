@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { ActivatedRoute, Params } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Hero } from '../../models/hero.entity';
 import { AppState } from '../../redux/app-state.interface';
 import { selectHeroById } from '../../redux/selectors/hero.selectors';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Hero } from '../../models/hero.entity';
-import { Observable, of } from 'rxjs';
+import { openDeleteHeroDialog } from './redux/actions/delete-hero.actions';
 import { fetchDetailPageData } from './redux/actions/fetch-detail-page-data.actions';
-import { switchMap } from 'rxjs/operators';
 
 /**
  * Detailed information on a hero
@@ -36,5 +37,18 @@ export class DetailPageComponent implements OnInit {
    */
   ngOnInit(): void {
     this.store.dispatch(fetchDetailPageData());
+  }
+
+  /**
+   * Dispatch Action to open the delete hero dialog
+   *
+   * @param hero Hero to delete
+   */
+  delete(hero: Hero): void {
+    this.store.dispatch(
+      openDeleteHeroDialog({
+        hero,
+      }),
+    );
   }
 }

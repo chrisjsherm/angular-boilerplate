@@ -1,15 +1,15 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
-import { switchMap, map, catchError } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
-import { of, Observable } from 'rxjs';
-import { Hero } from '../../../../models/hero.entity';
 import { Action } from '@ngrx/store';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { Hero } from '../../../../models/hero.entity';
+import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
 import {
   fetchDetailPageData,
-  fetchDetailPageDataSuccess,
   fetchDetailPageDataFailure,
+  fetchDetailPageDataSuccess,
 } from '../actions/fetch-detail-page-data.actions';
 
 /**

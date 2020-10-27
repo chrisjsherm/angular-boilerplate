@@ -1,4 +1,5 @@
 import { createAction } from '@ngrx/store';
+import { submitDeleteHeroSuccess } from '../../dialogs/delete-hero-dialog/redux/delete-hero-dialog.actions';
 import { Hero } from '../../models/hero.entity';
 import { submitCreateFormSuccess } from '../../pages/create-page/redux/actions/submit-create-form.actions';
 import { submitEditFormSuccess } from '../../pages/edit-page/redux/actions/submit-edit-form.actions';
@@ -19,6 +20,39 @@ describe('Hero Reducer', (): void => {
       expect(state).toBe(initialState);
     });
   });
+
+  it(
+    'should remove the hero from the Store after a successful submit ' +
+      'delete hero Action',
+    (): void => {
+      // Arrange
+      const action = submitDeleteHeroSuccess({
+        hero: {
+          id: '26bbe379-b165-4ccf-b993-aefff76b4790',
+        } as Hero,
+      });
+
+      // Act
+      const state = reducers.heroes(
+        [
+          {
+            id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+          } as Hero,
+          {
+            id: '26bbe379-b165-4ccf-b993-aefff76b4790',
+          } as Hero,
+        ],
+        action,
+      );
+
+      // Assert
+      expect(state).toEqual([
+        {
+          id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+        } as Hero,
+      ]);
+    },
+  );
 
   describe('On a fetch list page data success action', (): void => {
     it('should update the state with the refreshed list of heroes', (): void => {

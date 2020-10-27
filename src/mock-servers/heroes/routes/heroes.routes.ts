@@ -9,6 +9,8 @@ import { Hero } from '../../../app/models/hero.entity';
  * @param baseApiUrl Heroes API base URL
  */
 export function registerHeroesRoutes(server: Server, baseApiUrl: string): void {
+  server.del(`${baseApiUrl}/:id`);
+
   server.get(`${baseApiUrl}`);
 
   server.patch(

@@ -7,7 +7,10 @@
         {{ hero.firstName }}
         {{ hero.lastName }}
       </h1>
-      <a mat-button [routerLink]="'edit'" i18n>Edit</a>
+      <a mat-button routerLink="edit" i18n>Edit</a>
+      <button mat-button (click)="delete(hero)" color="warn" i18n>
+        Delete
+      </button>
     </div>
 
     <div class="info">

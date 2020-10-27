@@ -9,6 +9,7 @@ import { MockComponents, MockDirective } from 'ng-mocks';
 import { BehaviorSubject, of } from 'rxjs';
 import { AppState } from '../../redux/app-state.interface';
 import { DetailPageComponent } from './detail-page.component';
+import { openDeleteHeroDialog } from './redux/actions/delete-hero.actions';
 import { fetchDetailPageData } from './redux/actions/fetch-detail-page-data.actions';
 
 describe('DetailPageComponent', (): void => {
@@ -138,5 +139,30 @@ describe('DetailPageComponent', (): void => {
 
     // Assert
     expect(heading.innerText).toEqual('George Washington');
+  });
+
+  it('should dispatch a delete hero Action', (): void => {
+    // Arrange
+    const deleteButton: HTMLButtonElement = fixture.debugElement.query(
+      By.css('button[color="warn"]'),
+    ).nativeElement;
+
+    // Act
+    deleteButton.click();
+
+    // Assert
+    expect(store.dispatch).toHaveBeenCalledTimes(2);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      openDeleteHeroDialog({
+        hero: {
+          id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
+          firstName: 'George',
+          lastName: 'Washington',
+          fullName: 'George Washington',
+          phoneNumber: '(703) 111-1111',
+          avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
+        },
+      }),
+    );
   });
 });

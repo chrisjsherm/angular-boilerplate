@@ -1,0 +1,27 @@
+<h1 mat-dialog-title i18n>
+  Delete
+</h1>
+
+<mat-dialog-content>
+  <p i18n>
+    Are you sure you want to delete
+    <strong>{{ hero.firstName }} {{ hero.lastName }}</strong
+    >?
+  </p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button
+    (click)="onSubmit(hero)"
+    mat-button
+    color="primary"
+    cdkFocusInitial
+    i18n
+  >
+    Delete
+  </button>
+
+  <button mat-button mat-dialog-close i18n>
+    Cancel
+  </button>
+</mat-dialog-actions>

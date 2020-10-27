@@ -1,4 +1,5 @@
-* Add Redux routing
+* Add snackbar message in delete hero success/failure
 
 * Add user management
 - Service vs. local/custom
+- https://docs.microsoft.com/en-us/azure/active-directory/develop/tutorial-v2-angular (need to make sure it makes sense to grant AD access)

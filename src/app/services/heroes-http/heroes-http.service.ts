@@ -72,4 +72,21 @@ export class HeroesHttpService {
       ),
     );
   }
+
+  /**
+   * Delete a hero
+   *
+   * @param id ID of the hero we're deleting
+   *
+   * @returns Empty Observable indicating the completion of hte HTTP request
+   */
+  delete(id: string): Observable<void> {
+    return this.baseUrl$.pipe(
+      exhaustMap(
+        (baseUrl: string): Observable<void> => {
+          return this.httpClient.delete<void>(`${baseUrl}/${id}`);
+        },
+      ),
+    );
+  }
 }

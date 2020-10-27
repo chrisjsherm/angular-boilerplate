@@ -93,4 +93,15 @@ describe('HeroesHttpService', (): void => {
       avatarUrl: 'https://avatar.com/george-washington/profile.jpg',
     });
   });
+
+  it('should delete the hero', (): void => {
+    // Act
+    service.delete('9879ccc1-e75f-48ba-b2e5-f92d501719fb').subscribe();
+
+    // Assert
+    const testRequest = httpTestingController.expectOne(
+      'http://192.1.1.1:8282/api/v1/heroes/9879ccc1-e75f-48ba-b2e5-f92d501719fb',
+    );
+    expect(testRequest.request.method).toBe('DELETE');
+  });
 });
