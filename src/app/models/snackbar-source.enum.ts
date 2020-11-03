@@ -3,5 +3,6 @@
  */
 export enum SnackbarSourceEvent {
   Create = 'Create',
+  Delete = 'Delete',
   Update = 'Update',
 }
