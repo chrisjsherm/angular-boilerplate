@@ -1,9 +1,15 @@
-<ng-container [ngSwitch]="snackbarSource">
+<div [ngSwitch]="snackbarSource">
   <span i18n *ngSwitchCase="SnackbarSource.Create">
     Create successful
+  </span>
+
+  <span i18n *ngSwitchCase="SnackbarSource.Delete">
+    Delete successful
   </span>
 
   <span *ngSwitchCase="SnackbarSource.Update">
     Update successful
   </span>
-</ng-container>
+
+  <button mat-raised-button (click)="onDismiss()">Close</button>
+</div>

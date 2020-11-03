@@ -41,7 +41,7 @@ import { CustomErrorStateMatcher } from './custom.error-state-matcher';
   ],
   providers: [
     { provide: ErrorStateMatcher, useClass: CustomErrorStateMatcher },
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 10500 } },
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 1500 } },
   ],
 })
 export class AngularMaterialReExportModule {}

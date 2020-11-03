@@ -1,5 +1,8 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import {
+  MatSnackBarRef,
+  MAT_SNACK_BAR_DATA,
+} from '@angular/material/snack-bar';
 import { SnackbarSourceEvent } from '../../models/snackbar-source.enum';
 
 /**
@@ -8,12 +11,20 @@ import { SnackbarSourceEvent } from '../../models/snackbar-source.enum';
 @Component({
   selector: 'app-snackbar-failure',
   templateUrl: './snackbar-failure.component.html',
-  styleUrls: [],
+  styleUrls: ['./snackbar-failure.component.scss'],
 })
 export class SnackbarFailureComponent {
   readonly SnackbarSource = SnackbarSourceEvent;
 
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public snackbarSource: SnackbarSourceEvent,
+    private snackBarRef: MatSnackBarRef<SnackbarFailureComponent>,
   ) {}
+
+  /**
+   * Call the snackbar dismiss method
+   */
+  onDismiss(): void {
+    this.snackBarRef.dismiss();
+  }
 }
