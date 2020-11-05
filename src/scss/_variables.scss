@@ -1,3 +1,6 @@
 @import '~@angular/material/theming';
 
+$accentPalette: mat-palette($mat-pink, A200, A100, A400);
+
+$accent: mat-color($accentPalette);
 $success: mat-color(mat-palette($mat-green));

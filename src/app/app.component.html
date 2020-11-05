@@ -25,9 +25,21 @@
 
   <mat-sidenav #sideNav mode="side" position="end" fixedTopGap="64">
     <mat-nav-list (click)="sideNav.toggle()">
-      <a mat-list-item routerLink="/">Home</a>
+      <a
+        mat-list-item
+        routerLink="/heroes"
+        routerLinkActive="active-menu-item"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home</a
+      >
 
-      <a mat-list-item routerLink="/heroes/create">Create</a>
+      <a
+        mat-list-item
+        routerLink="/heroes/create"
+        routerLinkActive="active-menu-item"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Create</a
+      >
     </mat-nav-list>
   </mat-sidenav>
 </mat-sidenav-container>
