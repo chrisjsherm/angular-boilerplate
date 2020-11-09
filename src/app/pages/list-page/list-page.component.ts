@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { Hero } from '../../models/hero.entity';
 import { AppState } from '../../redux/app-state.interface';
-import { Store, select } from '@ngrx/store';
-import { fetchListPageData } from './redux/actions/fetch-list-page-data.actions';
 import { selectHeroes } from '../../redux/selectors/hero.selectors';
+import { fetchListPageData } from './redux/actions/fetch-list-page-data.actions';
 
 /**
  * List heroes

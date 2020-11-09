@@ -1,5 +1,4 @@
 * Workflow (requestor, approval)
-* Fix created hero always showing up at the top
 * Barcode scanner
 
 * Add user management

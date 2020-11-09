@@ -45,7 +45,7 @@ export const reducer = createReducer(
       state: Hero[],
       action: ReturnType<typeof submitCreateFormSuccess>,
     ): Hero[] => {
-      return [action.hero, ...state];
+      return [...state, action.hero];
     },
   ),
 
