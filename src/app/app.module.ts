@@ -28,6 +28,8 @@ import { SubmitEditFormEffects } from './pages/edit-page/redux/effects/submit-ed
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
 import { reducers } from './redux/reducers/app.action-reducer-map';
+import { ScannerComponent } from './organisms/scanner/scanner.component';
+import { ScanPageComponent } from './pages/scan-page/scan-page.component';
 
 /**
  * Base module for the entire application
@@ -44,6 +46,8 @@ import { reducers } from './redux/reducers/app.action-reducer-map';
     CreatePageComponent,
     HeroFormComponent,
     DeleteHeroDialogComponent,
+    ScannerComponent,
+    ScanPageComponent,
   ],
   imports: [
     BrowserModule,

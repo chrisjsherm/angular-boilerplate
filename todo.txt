@@ -1,5 +1,10 @@
-* Workflow (requestor, approval)
 * Barcode scanner
+- Handle errors
+- Style response
+- Tune detection area
+
+* Workflow (requestor, approval)
+
 
 * Add user management
 - Service vs. local/custom
