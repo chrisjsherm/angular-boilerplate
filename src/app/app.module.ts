@@ -17,6 +17,7 @@ import { DeleteHeroDialogComponent } from './dialogs/delete-hero-dialog/delete-h
 import { DeleteHeroDialogEffects } from './dialogs/delete-hero-dialog/redux/delete-hero-dialog.effects';
 import { ListTableComponent } from './molecules/list-table/list-table.component';
 import { HeroFormComponent } from './organisms/hero-form/hero-form.component';
+import { ScannerComponent } from './organisms/scanner/scanner.component';
 import { CreatePageComponent } from './pages/create-page/create-page.component';
 import { SubmitCreateFormEffects } from './pages/create-page/redux/effects/submit-create-form.effects';
 import { DetailPageComponent } from './pages/detail-page/detail-page.component';
@@ -27,9 +28,8 @@ import { FetchEditPageDataEffects } from './pages/edit-page/redux/effects/fetch-
 import { SubmitEditFormEffects } from './pages/edit-page/redux/effects/submit-edit-form.effects';
 import { ListPageComponent } from './pages/list-page/list-page.component';
 import { FetchListPageDataEffects } from './pages/list-page/redux/effects/fetch-list-page-data.effects';
-import { reducers } from './redux/reducers/app.action-reducer-map';
-import { ScannerComponent } from './organisms/scanner/scanner.component';
 import { ScanPageComponent } from './pages/scan-page/scan-page.component';
+import { reducers } from './redux/reducers/app.action-reducer-map';
 
 /**
  * Base module for the entire application

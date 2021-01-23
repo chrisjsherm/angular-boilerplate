@@ -1,5 +1,21 @@
-<app-scanner (barcodeDetected)="onBarcodeDetected($event)"></app-scanner>
+<app-scanner
+  (barcodeDetected)="onBarcodeDetected($event)"
+  (getUserMediaNotSupported)="onGetUserMediaNotSupported($event)"
+  (scannerInitializationError)="onScannerInitializationError($event)"
+></app-scanner>
 
 <p>
   {{ barcode }}
+</p>
+
+<p>
+  <mat-error *ngIf="scannerNotSupported" i18n>
+    The barcode scanner is not supported on this device.
+  </mat-error>
+</p>
+
+<p>
+  <mat-error *ngIf="hasInitializationError" i18n>
+    An error occurred initializing the scanner.
+  </mat-error>
 </p>

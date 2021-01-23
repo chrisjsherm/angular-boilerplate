@@ -48,14 +48,14 @@ export class ScannerComponent implements AfterViewInit {
    * @param initializationError Error provided by the Quagga scanner library
    *   while trying to initialize
    */
-  private quaggaInitializationCallback(initializationError: Error): void {
+  private quaggaInitializationCallback = (initializationError: Error): void => {
     if (initializationError) {
       this.scannerInitializationError.emit(initializationError);
     } else {
       Quagga.start();
       Quagga.onDetected(this.quaggaOnDetectedCallback);
     }
-  }
+  };
 
   /**
    * Function for Quagga to call each time it detects a barcode

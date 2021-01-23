@@ -1,5 +1,4 @@
 * Barcode scanner
-- Handle errors
 - Style response
 - Tune detection area
 
