@@ -1,6 +1,8 @@
 * Barcode scanner
-- Style response
 - Tune detection area
+- Animate between detecting and detected
+- Hide view finder when we have a detection
+- Style response
 
 * Workflow (requestor, approval)
 

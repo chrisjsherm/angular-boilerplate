@@ -35,8 +35,37 @@ describe('ScanPageComponent', (): void => {
     expect(component).toBeTruthy();
   });
 
-  it('should set the barcode property when it detects a barcode', (): void => {
+  it('should display "initializing scanner" until the scanner initializes', (): void => {
+    // Arrange
+    const barcodeResults: HTMLElement = fixture.debugElement.query(By.css('p'))
+      .nativeElement;
+
+    // Assert
+    expect(barcodeResults.innerText).toContain('Initializing scanner');
+  });
+
+  it('should display instructions for scanning once the scanner initializes', (): void => {
+    // Arrange
+    const barcodeResults: HTMLElement = fixture.debugElement.query(By.css('p'))
+      .nativeElement;
+
     // Act
+    component.onIsScannerInitialized(true);
+    fixture.detectChanges();
+
+    // Assert
+    expect(barcodeResults.innerText).toBe(
+      'Scan the barcode by placing it in the middle of the view finder.',
+    );
+  });
+
+  it('should display the barcode when one is detected', (): void => {
+    // Arrange
+    const barcodeResults: HTMLElement = fixture.debugElement.query(By.css('p'))
+      .nativeElement;
+
+    // Act
+    component.onIsScannerInitialized(true);
     component.onBarcodeDetected({
       codeResult: {
         code: 'abc',
@@ -44,12 +73,8 @@ describe('ScanPageComponent', (): void => {
     } as QuaggaJSResultObject);
     fixture.detectChanges();
 
-    // Arrange
-    const barcodeElement: HTMLElement = fixture.debugElement.query(By.css('p'))
-      .nativeElement;
-
     // Assert
-    expect(barcodeElement.innerText).toBe('abc');
+    expect(barcodeResults.innerText).toBe('Barcode detected: abc');
   });
 
   it('should set the scanner not supported property', (): void => {

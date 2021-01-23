@@ -12,6 +12,7 @@ import { QuaggaJSResultObject } from '@ericblade/quagga2';
 })
 export class ScanPageComponent {
   barcode: string;
+  isScannerInitialized: boolean;
   scannerNotSupported: boolean;
   hasInitializationError: boolean;
 
@@ -38,6 +39,15 @@ export class ScanPageComponent {
       'navigator.mediaDevices.getUserMedia does not exist on this device.',
     );
     this.scannerNotSupported = getUserMediaNoteSupported;
+  }
+
+  /**
+   * Set the property to indicate whether the scanner is initialized
+   *
+   * @param isInitialized Whether the scanner is initialized
+   */
+  onIsScannerInitialized(isInitialized: boolean): void {
+    this.isScannerInitialized = isInitialized;
   }
 
   /**

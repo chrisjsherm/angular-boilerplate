@@ -21,6 +21,7 @@ import { scannerConfiguration } from './scanner.configuration';
 export class ScannerComponent implements AfterViewInit {
   @Output() barcodeDetected = new EventEmitter<QuaggaJSResultObject>();
   @Output() getUserMediaNotSupported = new EventEmitter<boolean>();
+  @Output() isScannerInitialized = new EventEmitter<boolean>();
   @Output() scannerInitializationError = new EventEmitter<Error>();
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
@@ -53,6 +54,7 @@ export class ScannerComponent implements AfterViewInit {
       this.scannerInitializationError.emit(initializationError);
     } else {
       Quagga.start();
+      this.isScannerInitialized.emit(true);
       Quagga.onDetected(this.quaggaOnDetectedCallback);
     }
   };
@@ -62,7 +64,7 @@ export class ScannerComponent implements AfterViewInit {
    *
    * @param result Barcode result read via the Quagga scanner library
    */
-  private quaggaOnDetectedCallback(result: QuaggaJSResultObject): void {
+  private quaggaOnDetectedCallback = (result: QuaggaJSResultObject): void => {
     this.barcodeDetected.emit(result);
-  }
+  };
 }

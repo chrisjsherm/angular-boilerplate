@@ -1,11 +1,23 @@
 <app-scanner
   (barcodeDetected)="onBarcodeDetected($event)"
   (getUserMediaNotSupported)="onGetUserMediaNotSupported($event)"
+  (isScannerInitialized)="onIsScannerInitialized($event)"
   (scannerInitializationError)="onScannerInitializationError($event)"
 ></app-scanner>
 
-<p>
-  {{ barcode }}
+<p [ngSwitch]="isScannerInitialized">
+  <ng-container *ngSwitchCase="true" [ngSwitch]="!!barcode">
+    <span *ngSwitchCase="true"> Barcode detected: {{ barcode }} </span>
+
+    <span *ngSwitchDefault>
+      Scan the barcode by placing it in the middle of the view finder.
+    </span>
+  </ng-container>
+
+  <span *ngSwitchDefault>
+    <mat-spinner [diameter]="20"></mat-spinner>
+    Initializing scanner&hellip;
+  </span>
 </p>
 
 <p>
