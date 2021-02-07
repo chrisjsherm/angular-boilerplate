@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSpinner } from '@angular/material/progress-spinner';
 import { By } from '@angular/platform-browser';
 import { QuaggaJSResultObject } from '@ericblade/quagga2';
 import { MockComponents } from 'ng-mocks';
@@ -12,7 +13,10 @@ describe('ScanPageComponent', (): void => {
   beforeEach(
     async (): Promise<void> => {
       await TestBed.configureTestingModule({
-        declarations: [ScanPageComponent, MockComponents(ScannerComponent)],
+        declarations: [
+          ScanPageComponent,
+          MockComponents(ScannerComponent, MatSpinner),
+        ],
       }).compileComponents();
     },
   );
