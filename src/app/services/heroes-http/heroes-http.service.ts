@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { exhaustMap, map, switchMap } from 'rxjs/operators';
-import { HeroFormValues } from '../../models/hero-form-values.interface';
 import { Hero } from '../../models/hero.entity';
+import { HeroFormValues } from '../../organisms/hero-form/models/hero-form-values.interface';
 import { RuntimeConfigurationService } from '../runtime-configuration/runtime-configuration.service';
 
 /**

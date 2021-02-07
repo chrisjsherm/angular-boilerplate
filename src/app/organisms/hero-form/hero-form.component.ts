@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { HeroFormValues } from '../../models/hero-form-values.interface';
+import { HeroFormValues } from './models/hero-form-values.interface';
 
 /**
  * Custom form control for Hero properties. Enables us to use the same component

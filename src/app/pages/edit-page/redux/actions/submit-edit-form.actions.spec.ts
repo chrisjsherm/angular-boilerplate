@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { getStatusText, SERVICE_UNAVAILABLE } from 'http-status-codes';
-import { HeroFormValues } from '../../../../models/hero-form-values.interface';
+import { HeroFormValues } from '../../../../organisms/hero-form/models/hero-form-values.interface';
 import {
   submitEditForm,
   submitEditFormFailure,

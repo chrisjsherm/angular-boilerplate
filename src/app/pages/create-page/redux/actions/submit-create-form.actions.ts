@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
-import { HeroFormValues } from '../../../../models/hero-form-values.interface';
 import { Hero } from '../../../../models/hero.entity';
+import { HeroFormValues } from '../../../../organisms/hero-form/models/hero-form-values.interface';
 
 export const submitCreateForm = createAction(
   '[CreatePageComponent] Submit create form',
