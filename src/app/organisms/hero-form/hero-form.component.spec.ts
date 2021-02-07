@@ -116,7 +116,7 @@ describe('HeroFormComponent', (): void => {
     });
   });
 
-  describe('Write to the form control from outside the form contorl component', (): void => {
+  describe('Write to the form control from outside the form control component', (): void => {
     it('should not update the from group if the value is falsy', (): void => {
       // Arrange
       const setValueSpy = spyOn(component.formGroup, 'setValue');
