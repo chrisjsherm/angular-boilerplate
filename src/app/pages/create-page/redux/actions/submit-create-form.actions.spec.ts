@@ -67,7 +67,7 @@ describe('Submit create form actions', (): void => {
     });
   });
 
-  it('should issue a submit create form success action', (): void => {
+  it('should issue a submit create form failure action', (): void => {
     // Arrange
     const formData: HeroFormValues = {
       firstName: 'G.',
