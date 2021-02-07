@@ -153,4 +153,26 @@ describe('HeroFormComponent', (): void => {
       );
     });
   });
+
+  it('should register the function with the onChange property', (): void => {
+    // Arrange
+    const functionToRegister = (): string => 'Where I was born, where I belong';
+
+    // Act
+    component.registerOnChange(functionToRegister);
+
+    // Assert
+    expect(component.onChange).toBe(functionToRegister);
+  });
+
+  it('should register the function with the onTouched property', (): void => {
+    // Arrange
+    const functionToRegister = (): string => 'Back home';
+
+    // Act
+    component.registerOnTouched(functionToRegister);
+
+    // Assert
+    expect(component.onTouched).toBe(functionToRegister);
+  });
 });
