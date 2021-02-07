@@ -37,7 +37,7 @@ describe('EditPageComponent', (): void => {
         avatarUrl: 'https://avatar.com/jwayne/profile.jpg',
       },
     ],
-  };
+  } as AppState;
 
   let component: EditPageComponent;
   let fixture: ComponentFixture<EditPageComponent>;

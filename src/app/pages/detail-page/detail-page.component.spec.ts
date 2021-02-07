@@ -32,7 +32,7 @@ describe('DetailPageComponent', (): void => {
         avatarUrl: 'https://avatar.com/jwayne/profile.jpg',
       },
     ],
-  };
+  } as AppState;
 
   let component: DetailPageComponent;
   let fixture: ComponentFixture<DetailPageComponent>;

@@ -1,5 +1,6 @@
-import { selectHeroes, selectHeroById } from './hero.selectors';
 import { Hero } from '../../models/hero.entity';
+import { AppState } from '../app-state.interface';
+import { selectHeroById, selectHeroes } from './hero.selectors';
 
 describe('Hero Selectors', (): void => {
   describe('selectHeroes', (): void => {
@@ -24,7 +25,7 @@ describe('Hero Selectors', (): void => {
             avatarUrl: 'https://avatar.com/jwayne/profile.jpg',
           },
         ],
-      });
+      } as AppState);
 
       // Assert
       expect(selection.length).toBe(2);
@@ -55,7 +56,7 @@ describe('Hero Selectors', (): void => {
       const hero: Hero = selectHeroById(
         {
           heroes: undefined,
-        },
+        } as AppState,
         '1c300a8d-0fd0-41a9-98e2-de19a9ee8747',
       );
 
@@ -68,7 +69,7 @@ describe('Hero Selectors', (): void => {
       const hero: Hero = selectHeroById(
         {
           heroes: null,
-        },
+        } as AppState,
         '1c300a8d-0fd0-41a9-98e2-de19a9ee8747',
       );
 
@@ -98,7 +99,7 @@ describe('Hero Selectors', (): void => {
               avatarUrl: 'https://avatar.com/jwayne/profile.jpg',
             },
           ],
-        },
+        } as AppState,
         '1c300a8d-0fd0-41a9-98e2-de19a9ee8747',
       );
 
@@ -128,7 +129,7 @@ describe('Hero Selectors', (): void => {
               avatarUrl: 'https://avatar.com/jwayne/profile.jpg',
             },
           ],
-        },
+        } as AppState,
         'db3ee04b-05be-4403-9d48-807fb29717ec',
       );
 
