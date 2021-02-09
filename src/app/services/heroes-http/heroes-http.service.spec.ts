@@ -3,8 +3,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { RuntimeConfigurationService } from '../runtime-configuration/runtime-configuration.service';
-import { MockRuntimeConfigurationService } from '../runtime-configuration/testing/mock-runtime-configuration.service';
+import { provideMockRuntimeConfigurationService } from '../runtime-configuration/testing/mock-runtime-configuration.service';
 import { HeroesHttpService } from './heroes-http.service';
 
 describe('HeroesHttpService', (): void => {
@@ -14,12 +13,7 @@ describe('HeroesHttpService', (): void => {
   beforeEach((): void => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [
-        {
-          provide: RuntimeConfigurationService,
-          useClass: MockRuntimeConfigurationService,
-        },
-      ],
+      providers: [provideMockRuntimeConfigurationService()],
     });
 
     service = TestBed.inject(HeroesHttpService);
