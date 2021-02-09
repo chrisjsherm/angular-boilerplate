@@ -16,7 +16,7 @@ import { FetchEditPageDataEffects } from './fetch-edit-page-data.effects';
 describe('Fetch edit page data side effects', (): void => {
   let actions$: Observable<Action>;
   let effects: FetchEditPageDataEffects;
-  let heroesHttpService: jasmine.SpyObj<HeroesHttpService>;
+  let httpService: jasmine.SpyObj<HeroesHttpService>;
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ describe('Fetch edit page data side effects', (): void => {
     });
 
     effects = TestBed.inject(FetchEditPageDataEffects);
-    heroesHttpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
+    httpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
       HeroesHttpService
     >;
   });
@@ -44,7 +44,7 @@ describe('Fetch edit page data side effects', (): void => {
 
   it('should trigger a call to fetch heroes and issue a success action', (): void => {
     // Arrange
-    heroesHttpService.read.and.returnValue(
+    httpService.read.and.returnValue(
       of([
         {
           id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
@@ -102,7 +102,7 @@ describe('Fetch edit page data side effects', (): void => {
       'effect should stay alive for future actions',
     (): void => {
       // Arrange
-      heroesHttpService.read.and.returnValues(
+      httpService.read.and.returnValues(
         throwError(
           new HttpErrorResponse({
             status: SERVICE_UNAVAILABLE,

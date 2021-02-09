@@ -20,7 +20,7 @@ import { DeleteHeroDialogEffects } from './delete-hero-dialog.effects';
 describe('Side effects from the delete hero dialog', (): void => {
   let actions$: Observable<Action>;
   let effects: DeleteHeroDialogEffects;
-  let heroesHttpService: jasmine.SpyObj<HeroesHttpService>;
+  let httpService: jasmine.SpyObj<HeroesHttpService>;
   let snackbarService: MatSnackBar;
 
   beforeEach((): void => {
@@ -42,7 +42,7 @@ describe('Side effects from the delete hero dialog', (): void => {
     });
 
     effects = TestBed.inject(DeleteHeroDialogEffects);
-    heroesHttpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
+    httpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
       HeroesHttpService
     >;
     snackbarService = TestBed.inject(MatSnackBar);
@@ -50,7 +50,7 @@ describe('Side effects from the delete hero dialog', (): void => {
 
   it('should trigger a HTTP call to delete and issue a success Action', (): void => {
     // Arrange
-    heroesHttpService.delete.and.returnValue(of(undefined));
+    httpService.delete.and.returnValue(of(undefined));
 
     // Act
     actions$ = hot('-a', {
@@ -82,7 +82,7 @@ describe('Side effects from the delete hero dialog', (): void => {
       'staying alive for future Actions',
     (): void => {
       // Arrange
-      heroesHttpService.delete.and.returnValues(
+      httpService.delete.and.returnValues(
         throwError(
           new HttpErrorResponse({
             status: INTERNAL_SERVER_ERROR,

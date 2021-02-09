@@ -22,7 +22,7 @@ import { SubmitEditFormEffects } from './submit-edit-form.effects';
 describe('Submit edit form side effects', (): void => {
   let actions$: Observable<Action>;
   let effects: SubmitEditFormEffects;
-  let heroesHttpService: jasmine.SpyObj<HeroesHttpService>;
+  let httpService: jasmine.SpyObj<HeroesHttpService>;
   let router: Router;
   let snackbarService: MatSnackBar;
 
@@ -52,7 +52,7 @@ describe('Submit edit form side effects', (): void => {
     });
 
     effects = TestBed.inject(SubmitEditFormEffects);
-    heroesHttpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
+    httpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
       HeroesHttpService
     >;
     router = TestBed.inject(Router);
@@ -65,7 +65,7 @@ describe('Submit edit form side effects', (): void => {
 
   it('should trigger a call to update a hero and issue a success Action', (): void => {
     // Arrange
-    heroesHttpService.update.and.returnValue(of(undefined));
+    httpService.update.and.returnValue(of(undefined));
     const routerSpy = spyOn(router, 'navigate');
 
     // Act
@@ -111,7 +111,7 @@ describe('Submit edit form side effects', (): void => {
       'effect should stay alive for future actions',
     (): void => {
       // Arrange
-      heroesHttpService.update.and.returnValues(
+      httpService.update.and.returnValues(
         throwError(
           new HttpErrorResponse({
             status: SERVICE_UNAVAILABLE,

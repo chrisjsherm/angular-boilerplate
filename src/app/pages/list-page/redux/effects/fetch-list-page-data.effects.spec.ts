@@ -1,22 +1,22 @@
-import { Observable, of, throwError } from 'rxjs';
-import { Action } from '@ngrx/store';
-import { FetchListPageDataEffects } from './fetch-list-page-data.effects';
-import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
+import { Action } from '@ngrx/store';
+import { getStatusText, SERVICE_UNAVAILABLE } from 'http-status-codes';
+import { cold, hot } from 'jasmine-marbles';
+import { Observable, of, throwError } from 'rxjs';
+import { HeroesHttpService } from '../../../../services/heroes-http/heroes-http.service';
 import {
   fetchListPageData,
-  fetchListPageDataSuccess,
   fetchListPageDataFailure,
+  fetchListPageDataSuccess,
 } from '../actions/fetch-list-page-data.actions';
-import { cold, hot } from 'jasmine-marbles';
-import { HttpErrorResponse } from '@angular/common/http';
-import { SERVICE_UNAVAILABLE, getStatusText } from 'http-status-codes';
+import { FetchListPageDataEffects } from './fetch-list-page-data.effects';
 
 describe('Fetch list page data side effects', (): void => {
   let actions$: Observable<Action>;
   let effects: FetchListPageDataEffects;
-  let heroesHttpService: jasmine.SpyObj<HeroesHttpService>;
+  let httpService: jasmine.SpyObj<HeroesHttpService>;
 
   beforeEach((): void => {
     TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ describe('Fetch list page data side effects', (): void => {
     });
 
     effects = TestBed.inject(FetchListPageDataEffects);
-    heroesHttpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
+    httpService = TestBed.inject(HeroesHttpService) as jasmine.SpyObj<
       HeroesHttpService
     >;
   });
@@ -44,7 +44,7 @@ describe('Fetch list page data side effects', (): void => {
 
   it('should trigger a call to fetch heroes and issue a success action', (): void => {
     // Arrange
-    heroesHttpService.read.and.returnValue(
+    httpService.read.and.returnValue(
       of([
         {
           id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
@@ -102,7 +102,7 @@ describe('Fetch list page data side effects', (): void => {
       'effect should stay alive for future actions',
     (): void => {
       // Arrange
-      heroesHttpService.read.and.returnValues(
+      httpService.read.and.returnValues(
         throwError(
           new HttpErrorResponse({
             status: SERVICE_UNAVAILABLE,
