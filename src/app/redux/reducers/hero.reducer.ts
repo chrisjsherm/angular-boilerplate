@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
+import { cloneDeep } from '../../../helpers/clone-deep.helper';
 import { submitDeleteHeroSuccess } from '../../dialogs/delete-hero-dialog/redux/delete-hero-dialog.actions';
 import { Hero } from '../../models/hero.entity';
 import { submitCreateFormSuccess } from '../../pages/create-page/redux/actions/submit-create-form.actions';
@@ -11,21 +12,6 @@ export const initialState: Hero[] = undefined;
 
 export const reducer = createReducer(
   initialState,
-
-  on(
-    submitDeleteHeroSuccess,
-    (
-      state: Hero[],
-      action: ReturnType<typeof submitDeleteHeroSuccess>,
-    ): Hero[] => {
-      return state.reduce((result: Hero[], hero: Hero): Hero[] => {
-        if (hero.id !== action.hero.id) {
-          result.push(hero);
-        }
-        return result;
-      }, []);
-    },
-  ),
 
   on(
     fetchDetailPageDataSuccess,
@@ -45,7 +31,28 @@ export const reducer = createReducer(
       state: Hero[],
       action: ReturnType<typeof submitCreateFormSuccess>,
     ): Hero[] => {
-      return [...state, action.hero];
+      if (!state) {
+        return [action.hero];
+      }
+
+      const updatedState = cloneDeep(state);
+      updatedState.unshift(action.hero);
+      return updatedState;
+    },
+  ),
+
+  on(
+    submitDeleteHeroSuccess,
+    (
+      state: Hero[],
+      action: ReturnType<typeof submitDeleteHeroSuccess>,
+    ): Hero[] => {
+      return state.reduce((result: Hero[], hero: Hero): Hero[] => {
+        if (hero.id !== action.hero.id) {
+          result.push(hero);
+        }
+        return result;
+      }, []);
     },
   ),
 

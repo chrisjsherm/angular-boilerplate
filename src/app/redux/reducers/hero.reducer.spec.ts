@@ -120,6 +120,14 @@ describe('Hero Reducer', (): void => {
       // Assert
       expect(state).toEqual([
         {
+          id: '26bbe379-b165-4ccf-b993-aefff76b4790',
+          firstName: 'Thomas',
+          lastName: 'Jefferson',
+          phoneNumber: '(703) 555-5555',
+          avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
+          fullName: 'Thomas Jefferson',
+        },
+        {
           id: 'db3ee04b-05be-4403-9d48-807fb29717ec',
           firstName: 'George',
           lastName: 'Washington',
@@ -135,16 +143,41 @@ describe('Hero Reducer', (): void => {
           phoneNumber: '(210) 555-5555',
           avatarUrl: 'https://avatar.com/jwayne/profile.jpg',
         },
-        {
-          id: '26bbe379-b165-4ccf-b993-aefff76b4790',
-          firstName: 'Thomas',
-          lastName: 'Jefferson',
-          phoneNumber: '(703) 555-5555',
-          avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
-          fullName: 'Thomas Jefferson',
-        },
       ]);
     });
+
+    it(
+      'should update the state with the new hero when state was previously ' +
+        'undefined',
+      (): void => {
+        // Act
+        const state = reducers.heroes(
+          undefined,
+          submitCreateFormSuccess({
+            hero: {
+              id: '26bbe379-b165-4ccf-b993-aefff76b4790',
+              firstName: 'Thomas',
+              lastName: 'Jefferson',
+              phoneNumber: '(703) 555-5555',
+              avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
+              fullName: 'Thomas Jefferson',
+            },
+          }),
+        );
+
+        // Assert
+        expect(state).toEqual([
+          {
+            id: '26bbe379-b165-4ccf-b993-aefff76b4790',
+            firstName: 'Thomas',
+            lastName: 'Jefferson',
+            phoneNumber: '(703) 555-5555',
+            avatarUrl: 'https://avatar.com/t-jefferson/profile.jpg',
+            fullName: 'Thomas Jefferson',
+          },
+        ]);
+      },
+    );
   });
 
   describe('On a successful submission of the edit form', (): void => {

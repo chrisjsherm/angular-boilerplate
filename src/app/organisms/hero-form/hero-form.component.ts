@@ -139,6 +139,8 @@ export class HeroFormComponent
    * Writes a new value to the DOM elements that constitute this form control.
    * The forms API calls this method to write to the view when programmatic
    * changes from model to view occur.
+   *
+   * @param value New value for the form control
    */
   writeValue(value: HeroFormValues): void {
     if (value) {
